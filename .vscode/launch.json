@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-QuizzerApplication<quizzer>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "fi.haagahelia.quizzer.QuizzerApplication",
+            "projectName": "quizzer",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
