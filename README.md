@@ -5,4 +5,4 @@ School project. In this project the end goal is to make a software where the use
 - Edward Takaeilola https://github.com/eetutakaeilola365
 - Hilja Katajamäki https://github.com/hilja04
 - Vilho Karhu https://github.com/kvilho
-- Ikechukwu Aniebonam
+- Ikechukwu Aniebonam https://github.com/ikeani
