@@ -15,7 +15,7 @@ public class Quiz {
     private Long quizid;
     private String name;
     private String description;
-    private Boolean published;
+    private String published;
     private String date;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
@@ -23,7 +23,7 @@ public class Quiz {
 
     public Quiz(){}
 
-    public Quiz(String name, String description, Boolean published, String date) {
+    public Quiz(String name, String description, String published, String date) {
         this.name = name;
         this.description = description;
         this.published = published;
@@ -55,11 +55,11 @@ public class Quiz {
         this.description = description;
     }
 
-    public Boolean getPublished() {
+    public String getPublished() {
         return published;
     }
 
-    public void setPublished(Boolean published) {
+    public void setPublished(String published) {
         this.published = published;
     }
 

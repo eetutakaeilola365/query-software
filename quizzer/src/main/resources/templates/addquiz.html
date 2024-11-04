@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add quiz</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Quiz</h1>
+	<form action="#" th:action="@{/savequiz}"  th:object= ${quiz} method="post">
+	<p>Name: <input type="text" th:field="*{name}" /></p>
+	<p>Description: <input type="text" th:field="*{description}" /></p>
+	<p>Published: <input type="text" th:field="*{published}" /></p>
+	<p>Date: <input type="text" th:field="*{date}" /></p>
+	<input type="submit" value="Submit" /> <input type="reset" value="Reset" />
+	</form>
+    
+</body>
+</html>
