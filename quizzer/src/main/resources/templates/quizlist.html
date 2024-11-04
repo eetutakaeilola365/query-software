@@ -26,6 +26,9 @@
                     <td th:text="${quiz.published}">Published</td>
                     <td th:text="${quiz.date}">Date</td>
                     <td>
+                        <a th:href="@{/editquiz/{id}(id=${quiz.quizid})}" class="btn btn-secondary">
+                            Edit
+                         </a>
                         <a th:href="@{/deletequiz/{id}(id=${quiz.quizid})}" class="btn btn-danger">
                            Delete
                         </a>

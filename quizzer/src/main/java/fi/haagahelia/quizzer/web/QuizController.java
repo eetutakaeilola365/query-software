@@ -40,6 +40,14 @@ public class QuizController {
          return "redirect:/quizlist";
      }
 
+     @RequestMapping(value = "/editquiz/{id}")
+        public String editQuiz(@PathVariable("id") Long quizid, Model model){
+            Quiz quizz = quizrepository.findById(quizid).orElse(null);
+            model.addAttribute("quizname", quizz.getName());
+            model.addAttribute("quiz", quizrepository.findById(quizid));
+            return "editquiz";
+    }
+
     @RequestMapping("/deletequiz/{id}")
     public String deleteQuiz(@PathVariable("id") Long quizid) {
         quizrepository.deleteById(quizid);
