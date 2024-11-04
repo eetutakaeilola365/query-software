@@ -43,8 +43,6 @@ public class Answer {
         this.correct = correct;
     }
 
-    
-
     public Long getAnswerid() {
         return answerid;
     }
@@ -59,6 +57,4 @@ public class Answer {
     }
 
     
-    
-
 }

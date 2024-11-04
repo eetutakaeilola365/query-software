@@ -1,11 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add quiz</title>
+    <title>Quiz List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Quiz</h1>
-    
+    <h1>Quiz List</h1>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Published</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="quiz : ${quizzes}">
+                    <td th:text="${quiz.name}">Quiz Name</td>
+                    <td th:text="${quiz.description}">Quiz Description</td>
+                    <td th:text="${quiz.published}">Published</td>
+                    <td th:text="${quiz.date}">Date</td>
+                    <td>
+                        <a th:href="@{/deletequiz/{id}(id=${quiz.quizid})}">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+    <a th:href="@{/addquiz}">Add New Quiz</a>
 </body>
 </html>
