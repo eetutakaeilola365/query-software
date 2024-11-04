@@ -1,4 +1,5 @@
 package fi.haagahelia.quizzer.domain;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -7,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class Quiz {
@@ -16,14 +18,15 @@ public class Quiz {
     private String name;
     private String description;
     private String published;
-    private String date;
+    @CreationTimestamp
+    private LocalDate date;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
     private List <Question> questions;
 
     public Quiz(){}
 
-    public Quiz(String name, String description, String published, String date) {
+    public Quiz(String name, String description, String published, LocalDate date) {
         this.name = name;
         this.description = description;
         this.published = published;
@@ -63,11 +66,11 @@ public class Quiz {
         this.published = published;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

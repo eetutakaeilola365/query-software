@@ -3,12 +3,13 @@
 <head>
     <title>Quiz List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
     <h1>Quiz List</h1>
 
-    <div>
-        <table>
+    <div class="container">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -25,7 +26,7 @@
                     <td th:text="${quiz.published}">Published</td>
                     <td th:text="${quiz.date}">Date</td>
                     <td>
-                        <a th:href="@{/deletequiz/{id}(id=${quiz.quizid})}">
+                        <a th:href="@{/deletequiz/{id}(id=${quiz.quizid})}" class="btn btn-danger">
                            Delete
                         </a>
                     </td>
@@ -35,6 +36,6 @@
     </div>
 
     <br />
-    <a th:href="@{/addquiz}">Add New Quiz</a>
+    <a th:href="@{/addquiz}" class="btn btn-primary">Add New Quiz</a>
 </body>
 </html>
