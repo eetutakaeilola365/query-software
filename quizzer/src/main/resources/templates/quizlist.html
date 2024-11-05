@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Quiz List</h1>
 
     <div class="container">
+        <h1 class="mt-3">Quiz List</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -36,9 +36,9 @@
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/addquiz}" class="btn btn-primary">Add New Quiz</a>
     </div>
 
     <br />
-    <a th:href="@{/addquiz}" class="btn btn-primary">Add New Quiz</a>
 </body>
 </html>
