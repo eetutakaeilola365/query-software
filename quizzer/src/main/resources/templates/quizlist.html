@@ -23,7 +23,7 @@
                 <tr th:each="quiz : ${quizzes}">
                     <td th:text="${quiz.name}">Quiz Name</td>
                     <td th:text="${quiz.description}">Quiz Description</td>
-                    <td th:text="${quiz.published}">Published</td>
+                    <td th:text="${quiz.published ? 'Published' : 'Not Published'}">Published</td>
                     <td th:text="${quiz.date}">Date</td>
                     <td>
                         <a th:href="@{/editquiz/{id}(id=${quiz.quizid})}" class="btn btn-secondary">

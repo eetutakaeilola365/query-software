@@ -9,7 +9,7 @@
 	<form action="#" th:action="@{/savequiz}"  th:object= ${quiz} method="post">
 	<p>Name: <input type="text" th:field="*{name}" /></p>
 	<p>Description: <input type="text" th:field="*{description}" /></p>
-	<p>Published: <input type="text" th:field="*{published}" /></p>
+	<p><input type="checkbox" th:field="*{published}" /> Published</p>
 	<input type="submit" value="Submit" /> <input type="reset" value="Reset" />
 	</form>
     

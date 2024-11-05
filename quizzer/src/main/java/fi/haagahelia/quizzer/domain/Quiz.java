@@ -17,7 +17,7 @@ public class Quiz {
     private Long quizid;
     private String name;
     private String description;
-    private String published;
+    private boolean published;
     @CreationTimestamp
     private LocalDate date;
 
@@ -26,7 +26,7 @@ public class Quiz {
 
     public Quiz(){}
 
-    public Quiz(String name, String description, String published, LocalDate date) {
+    public Quiz(String name, String description, boolean published, LocalDate date) {
         this.name = name;
         this.description = description;
         this.published = published;
@@ -58,11 +58,11 @@ public class Quiz {
         this.description = description;
     }
 
-    public String getPublished() {
+    public boolean getPublished() {
         return published;
     }
 
-    public void setPublished(String published) {
+    public void setPublished(boolean published) {
         this.published = published;
     }
 
