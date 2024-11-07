@@ -21,7 +21,7 @@
                     <td th:text="${quiz.name}">Question text</td>
                     <td th:text="${quiz.description}">Difficulty</td>
                     <td>
-                        <a th:href="@{/deletequiz/{id}(id=${quiz.quizid})}" class="btn btn-danger">
+                        <a th:href="@{/deletequestion/{id}(id=${question.questionid})}" class="btn btn-danger">
                            Delete
                         </a>
                     </td>
