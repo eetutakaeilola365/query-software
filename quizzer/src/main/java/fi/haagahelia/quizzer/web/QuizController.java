@@ -6,13 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import fi.haagahelia.quizzer.domain.QuizzRepository;
 
 import fi.haagahelia.quizzer.domain.Quiz;
-import fi.haagahelia.quizzer.domain.Answer;
-import fi.haagahelia.quizzer.domain.Question;
 
 @Controller
 public class QuizController {
@@ -37,7 +33,7 @@ public class QuizController {
         
          quizrepository.save(quiz);
         
-         return "redirect:/quizl    ist";
+         return "redirect:/quizlist";
      }
 
      @RequestMapping(value = "/editquiz/{id}")
