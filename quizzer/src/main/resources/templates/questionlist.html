@@ -17,18 +17,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="quiz : ${quizzes}">
-                    <td th:text="${quiz.name}">Question text</td>
-                    <td th:text="${quiz.description}">Difficulty</td>
+                <tr th:each="question : ${questions}">
+                    <td th:text="${question.name}">Question text</td>
+                    <td th:text="${question.difficulty}">Difficulty</td>
                     <td>
-                        <a th:href="@{/deletequestion/{id}(id=${question.questionid})}" class="btn btn-danger">
+                        <a th:href="@{/deletequestion/{id}/{quizId}(id=${question.questionid}, quizId=${quizId})}" class="btn btn-danger">
                            Delete
                         </a>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <a th:href="@{/addquestion}" class="btn btn-primary">Add New Question</a>
+        <a th:href="@{/{quizId}/addquestion(quizId=${quizId})}" class="btn btn-primary">Add New Question</a>
     </div>
  
     <br />
