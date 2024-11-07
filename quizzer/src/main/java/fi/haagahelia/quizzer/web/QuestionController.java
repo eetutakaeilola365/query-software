@@ -39,4 +39,10 @@ public class QuestionController {
     public String savequestion() {
         return "quizlist"; 
     }
+
+    @RequestMapping("/deletequestion/{id}")
+    public String deleteQuestion(@PathVariable("id") Long questionid) {
+        questionrepository.deleteById(questionid);
+        return "redirect:{id}/questionlist";
+    }
 }
