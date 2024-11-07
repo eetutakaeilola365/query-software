@@ -14,6 +14,13 @@ import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.Answer;
 import fi.haagahelia.quizzer.domain.Question;
 
+@Controller
 public class QuestionController {
+
+    @RequestMapping(value = "/addquestion")
+    public String addSong(Model model){
+        model.addAttribute("question", new Question());
+        return "addquestion";
+    }
 
 }
