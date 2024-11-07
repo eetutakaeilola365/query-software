@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Question List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="mt-3">Question List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Question Text</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="quiz : ${quizzes}">
+                    <td th:text="${quiz.name}">Question text</td>
+                    <td th:text="${quiz.description}">Difficulty</td>
+                    <td>
+                        <a th:href="@{/deletequiz/{id}(id=${quiz.quizid})}" class="btn btn-danger">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/addquestion}" class="btn btn-primary">Add New Question</a>
+    </div>
+
+    <br />
+</body>
+</html>

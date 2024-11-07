@@ -37,7 +37,7 @@ public class QuizController {
         
          quizrepository.save(quiz);
         
-         return "redirect:/quizlist";
+         return "redirect:/quizl    ist";
      }
 
      @RequestMapping(value = "/editquiz/{id}")
