@@ -28,6 +28,9 @@
                     </td> 
                     <td th:text="${quiz.date}">Date</td>
                     <td>
+                        <a th:href="@{/{id}/questionlist(id=${quiz.quizid})}">See questions</a>
+                    </td>
+                    <td>
                         <a th:href="@{/editquiz/{id}(id=${quiz.quizid})}" class="btn btn-secondary">
                             Edit
                          </a>
