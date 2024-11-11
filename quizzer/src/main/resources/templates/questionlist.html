@@ -18,8 +18,8 @@
             </thead>
             <tbody>
                 <tr th:each="quiz : ${quizzes}">
-                    <td th:text="${quiz.name}">Question text</td>
-                    <td th:text="${quiz.description}">Difficulty</td>
+                    <td th:text="${question.name}">Question text</td>
+                    <td th:text="${question.difficulty}">Difficulty</td>
                     <td>
                         <a th:href="@{/deletequestion/{id}(id=${question.questionid})}" class="btn btn-danger">
                            Delete
