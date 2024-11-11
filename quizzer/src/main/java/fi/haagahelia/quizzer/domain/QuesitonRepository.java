@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuesitonRepository extends CrudRepository <Question, Long>{
-    List<Question> findByName(String name);
+    List<Question> findByQuiz(Quiz quiz);
 }

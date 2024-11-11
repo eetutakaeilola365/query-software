@@ -25,24 +25,34 @@ public class QuestionController {
 
     @Autowired private QuizzRepository quizrepository;
 
-	@GetMapping("/{id}/questionlist")
-	public String getQuestion(Model model) {
-        model.addAttribute("questions", questionrepository.findAll());
+	@GetMapping("/{quizId}/questionlist")
+	public String getQuestion(@PathVariable("quizId") Long quizId, Model model) {
+        Quiz quiz = quizrepository.findById(quizId).orElse(null);
+        if (quiz != null) {
+        model.addAttribute("questions", questionrepository.findByQuiz(quiz));
+        model.addAttribute("quizId", quizId);
+    }
 		return "questionlist";
 	}
-    @RequestMapping(value = "/addquestion")
-    public String addquestion(Model model){
+    @RequestMapping(value = "/{quizId}/addquestion")
+    public String addquestion(@PathVariable("quizId") Long quizId, Model model){
         model.addAttribute("question", new Question());
+        model.addAttribute("quizId", quizId);
         return "addquestion";
     }
-    @RequestMapping(value = "/savequestion", method = RequestMethod.POST)
-    public String savequestion() {
-        return "quizlist"; 
+    @RequestMapping(value = "/{quizId}/savequestion", method = RequestMethod.POST)
+    public String savequestion(@PathVariable("quizId") Long quizId, @ModelAttribute Question question) {
+        Quiz quiz = quizrepository.findById(quizId).orElse(null);
+        if (quiz != null) {
+            question.setQuiz(quiz);
+            questionrepository.save(question);
+        }
+        return "redirect:/" + quizId + "/questionlist"; 
     }
 
-    @RequestMapping("/deletequestion/{id}")
-    public String deleteQuestion(@PathVariable("id") Long questionid) {
+    @RequestMapping("/deletequestion/{id}/{quizId}")
+    public String deleteQuestion(@PathVariable("id") Long questionid, @PathVariable("quizId") Long quizId) {
         questionrepository.deleteById(questionid);
-        return "redirect:{id}/questionlist";
+        return "redirect:/" + quizId + "/questionlist";
     }
 }
