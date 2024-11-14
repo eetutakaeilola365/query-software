@@ -18,9 +18,9 @@
             </thead>
             <tbody>
                 <tr th:each="answer : ${answers}">
-                    <td th:text="${answer.name}">Answer</td>
+                    <td th:text="${answer.choice}">Answer</td>
                     <td>
-                        <span th:text="${answer.published ? 'Correct' : 'Incorrect'}" th:class="${quiz.published ? 'badge badge-success' : 'badge badge-danger'}"></span>
+                        <span th:text="${answer.correct ? 'Correct' : 'Incorrect'}" th:class="${answer.correct ? 'badge badge-success' : 'badge badge-danger'}"></span>
                     </td>
                     <td>
                         <a th:href="@{/deleteanswer/{id}/{questionId}(id=${answer.answerid}, questionId=${questionId})}" class="btn btn-danger">
@@ -32,6 +32,7 @@
         </table>
         <a th:href="@{/{questionId}/addanswer(questionId=${questionId})}" class="btn btn-primary">Add New Answer Option</a>
         <a th:href="@{/{quizId}/questionlist(quizId=${quizId})}" class="btn btn-secondary mt-2">Back to Questions</a>
+        
     </div>
  
     <br />

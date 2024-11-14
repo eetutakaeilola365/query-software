@@ -21,7 +21,7 @@
                     <td th:text="${question.name}">Question text</td>
                     <td th:text="${question.difficulty}">Difficulty</td>
                     <td>
-                        <a th:href="@{/{id}/answerlist(id=${question.questionid})}">See questions</a>
+                        <a th:href="@{/{questionId}/answerlist(questionId=${question.questionid})}">See answers</a>
                     </td>
                     <td>
                         <a th:href="@{/deletequestion/{id}/{quizId}(id=${question.questionid}, quizId=${quizId})}" class="btn btn-danger">

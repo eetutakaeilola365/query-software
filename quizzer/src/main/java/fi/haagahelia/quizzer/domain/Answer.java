@@ -51,9 +51,19 @@ public class Answer {
         this.answerid = answerid;
     }
 
+    
+
     @Override
     public String toString() {
         return "Answer [answerid=" + answerid + ", choice=" + choice + ", correct=" + correct + "]";
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     

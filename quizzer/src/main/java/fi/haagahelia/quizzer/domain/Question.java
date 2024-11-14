@@ -63,8 +63,7 @@ public class Question {
 
     @Override
     public String toString() {
-        return "Question [questionid=" + questionid + ", name=" + name + ", difficulty=" + difficulty + ", quiz=" + quiz
-                + "]";
+        return "Question [questionid=" + questionid + ", name=" + name + ", difficulty=" + difficulty;
     }
 
     
