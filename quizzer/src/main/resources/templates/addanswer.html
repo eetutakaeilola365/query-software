@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add question</title>
+    <title>Add answer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -10,8 +10,9 @@
         <h1 class="mt-3">Add Answer</h1>
         <form action="#" th:action="@{/{questionId}/saveanswer(questionId=${questionId})}"  th:object= ${answer} method="post">
             <input type="hidden" th:name="questionId" th:value="${questionId}" />
-			<div class="form-group">
-                <label for="name">Answer Option</label>
+			
+            <div class="form-group">
+                <label for="name">Answer Option Text</label>
                 <input type="text" id="name" th:field="*{name}" class="form-control" required />
             </div>
 
