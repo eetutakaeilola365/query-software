@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Question List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+ 
+    <div class="container">
+        <h1 class="mt-3">Question List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Answer Option</th>
+                    <th>Correctness</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="answer : ${answers}">
+                    <td th:text="${answer.name}">Answer</td>
+                    <td>
+                        <span th:text="${answer.published ? 'Correct' : 'Incorrect'}" th:class="${quiz.published ? 'badge badge-success' : 'badge badge-danger'}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/deleteanswer/{id}/{questionId}(id=${answer.answerid}, questionId=${questionId})}" class="btn btn-danger">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/{questionId}/addanswer(questionId=${questionId})}" class="btn btn-primary">Add New Answer Option</a>
+        <a th:href="@{/{quizId}/questionlist(quizId=${quizId})}" class="btn btn-secondary mt-2">Back to Questions</a>
+    </div>
+ 
+    <br />
+</body>
+</html>
+ 
