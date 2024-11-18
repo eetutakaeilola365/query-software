@@ -21,7 +21,7 @@ public class Quiz {
     @CreationTimestamp
     private LocalDate date;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz", orphanRemoval = true)
     private List <Question> questions;
 
     public Quiz(){}

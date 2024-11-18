@@ -61,7 +61,7 @@ public class AnswerController {
     @RequestMapping("/deleteanswer/{id}/{questionId}")
     public String deleteQuestion(@PathVariable("id") Long answerid, @PathVariable("questionId") Long questionId) {
         arepository.deleteById(answerid);
-        return "redirect:/" + questionId + "/questionlist";
+        return "redirect:/" + questionId + "/answerlist";
     }
     
 }
