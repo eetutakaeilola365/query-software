@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Quiz {
     @Id
@@ -21,6 +23,7 @@ public class Quiz {
     @CreationTimestamp
     private LocalDate date;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz", orphanRemoval = true)
     private List <Question> questions;
 

@@ -2,6 +2,8 @@ package fi.haagahelia.quizzer.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class Question {
     private String name;
     private String difficulty;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", orphanRemoval = true)
     private List <Answer> answers;
 
