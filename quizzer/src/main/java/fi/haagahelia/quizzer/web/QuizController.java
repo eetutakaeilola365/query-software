@@ -1,5 +1,7 @@
 package fi.haagahelia.quizzer.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
-
+import fi.haagahelia.quizzer.domain.Category;
+import fi.haagahelia.quizzer.domain.CategoryRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 
 @Controller
@@ -16,9 +19,13 @@ public class QuizController {
     @Autowired
     private QuizzRepository quizrepository;
 
+    @Autowired private CategoryRepository categoryrepo;
+
     @GetMapping("/addquiz")
     public String addQuiz(Model model) {
+        model.addAttribute("categories", categoryrepo.findAll());
         model.addAttribute("quiz", new Quiz());
+
         return "addquiz";
     }
 
@@ -38,9 +45,11 @@ public class QuizController {
 
     @RequestMapping(value = "/editquiz/{id}")
     public String editQuiz(@PathVariable("id") Long quizid, Model model) {
-        Quiz quizz = quizrepository.findById(quizid).orElse(null);
-        model.addAttribute("quizname", quizz.getName());
-        model.addAttribute("quiz", quizrepository.findById(quizid));
+
+        Quiz quiz = quizrepository.findById(quizid).orElse(null);
+        model.addAttribute("categories", categoryrepo.findAll());
+        model.addAttribute("quizname", quiz.getName());
+        model.addAttribute("quiz", quiz);
         return "editquiz";
     }
 
