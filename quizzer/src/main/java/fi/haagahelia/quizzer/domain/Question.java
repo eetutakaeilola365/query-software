@@ -2,6 +2,7 @@ package fi.haagahelia.quizzer.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -26,6 +27,7 @@ public class Question {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", orphanRemoval = true)
     private List <Answer> answers;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "quizid")
     private Quiz quiz;

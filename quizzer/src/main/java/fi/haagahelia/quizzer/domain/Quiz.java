@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Quiz {
@@ -23,7 +24,7 @@ public class Quiz {
     @CreationTimestamp
     private LocalDate date;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz", orphanRemoval = true)
     private List <Question> questions;
 
