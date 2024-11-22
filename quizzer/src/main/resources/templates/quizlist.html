@@ -14,6 +14,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Category</th>
                     <th>Published</th>
                     <th>Date</th>
                     <th>Actions</th>
@@ -23,6 +24,7 @@
                 <tr th:each="quiz : ${quizzes}">
                     <td th:text="${quiz.name}">Quiz Name</td>
                     <td th:text="${quiz.description}">Quiz Description</td>
+                    <td th:text="${quiz.category} ? ${quiz.category.name}:''">Category</td>
                     <td>
                         <span th:text="${quiz.published ? 'Published' : 'Not Published'}" th:class="${quiz.published ? 'badge badge-primary' : 'badge badge-secondary'}"></span>
                     </td>
@@ -42,9 +44,8 @@
             </tbody>
         </table>
         <a th:href="@{/addquiz}" class="btn btn-primary">Add New Quiz</a>
+        <a th:href="@{/categorylist}" class="btn btn-secondary">See categories</a>
     </div>
- 
-    <br />
 </body>
 </html>
  

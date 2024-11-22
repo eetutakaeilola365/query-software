@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,14 +30,25 @@ public class Quiz {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz", orphanRemoval = true)
     private List <Question> questions;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="categoryid")
+    private Category category;
+
     public Quiz(){}
 
-    public Quiz(String name, String description, boolean published, LocalDate date) {
+    
+
+    public Quiz(Long quizid, String name, String description, boolean published, LocalDate date, Category category) {
+        this.quizid = quizid;
         this.name = name;
         this.description = description;
         this.published = published;
         this.date = date;
+        this.category = category;
     }
+
+
 
     public String getName() {
         return name;
@@ -86,12 +99,21 @@ public class Quiz {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public String toString() {
         return "Quiz [quizid=" + quizid + ", name=" + name + ", description=" + description + ", published=" + published
-                + ", date=" + date + ", questions=" + questions + "]";
+                + ", date=" + date + ", questions=" + questions + ", category=" + category + "]";
     }
+    
+    
     
     
     

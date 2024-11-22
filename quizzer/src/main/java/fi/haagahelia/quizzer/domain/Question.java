@@ -24,7 +24,7 @@ public class Question {
     private String difficulty;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")//, orphanRemoval = true
     private List <Answer> answers;
 
     @JsonBackReference
