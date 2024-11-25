@@ -7,10 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
 import java.util.List;
 
 import fi.haagahelia.quizzer.domain.AnsverRepository;
@@ -18,13 +22,10 @@ import fi.haagahelia.quizzer.domain.Answer;
 import fi.haagahelia.quizzer.domain.QuesitonRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
-import fi.haagahelia.quizzer.domain.Submission;
 import fi.haagahelia.quizzer.domain.SubmissionDto;
-import fi.haagahelia.quizzer.domain.SubmissionRepository;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/api")
@@ -38,10 +39,14 @@ public class QuizRestController {
     private QuesitonRepository questionRepository;
 
     @Autowired
-    private AnsverRepository answerRepository;
+    private SubmissionRepository submissionRepository;
 
     @Autowired
-    private SubmissionRepository submissionRepository;
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private AnsverRepository answerRepository;
+
 
     // Get all published quizzes
     @GetMapping("/quizzes")
@@ -69,6 +74,33 @@ public class QuizRestController {
         }
         return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
     }
+    @GetMapping("/categories")
+    public ResponseEntity<List<Category>> getCategories(){
+        List<Category> categories = categoryRepository.findAll();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long categoryid) {
+        Category category = categoryRepository.findById(categoryid).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with the id: " + categoryid + " does not exist"));
+        return new ResponseEntity<>(category, HttpStatus.OK); // 200 OK
+    }
+
+    @GetMapping("/quizzes/{id}/submissions")
+    public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
+        Quiz quiz = quizRepository.findById(quizid).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id does not exist"));
+        List<Submission> submissions = submissionRepository.findByQuiz(quiz);
+        if (submissions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(submissions, HttpStatus.OK);
+    }
+    
+
+
+    
 
     @PostMapping("/submissions")
     public ResponseEntity<String> postSubmission(@RequestBody SubmissionDto submission) {
