@@ -18,6 +18,8 @@ import fi.haagahelia.quizzer.domain.Answer;
 import fi.haagahelia.quizzer.domain.QuesitonRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
+import fi.haagahelia.quizzer.domain.Submission;
+import fi.haagahelia.quizzer.domain.SubmissionRepository;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
 import fi.haagahelia.quizzer.domain.Category;
@@ -36,7 +38,7 @@ public class QuizRestController {
     private QuesitonRepository questionRepository;
 
     @Autowired
-    private AnsverRepository answerRepository;
+    private SubmissionRepository submissionRepository;
 
     @Autowired
     private Category categoryRepository;
@@ -73,9 +75,17 @@ public class QuizRestController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    @GetMapping("/answers")
-    public ResponseEntity<List<Answer>> getAllAnswers() {
-        List<Answer> answers = answerRepository.findAll();
+    @GetMapping("/quizzes/{id}/submissions")
+    public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
+        Quiz quiz = getQuizById(quizid).getBody();
+        if (quiz == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Submission> submissions = submissionRepository.findByAnswer(quiz);
+        if (submissions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
     
 }
