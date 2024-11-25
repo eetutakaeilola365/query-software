@@ -63,6 +63,12 @@ public class QuizRestController {
         return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
     }
 
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long categoryid) {
+        Category category = categoryRepository.findById(categoryid).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with the id: " + categoryid + " does not exist"));
+        return new ResponseEntity<>(category, HttpStatus.OK); // 200 OK
+
     @GetMapping("/answers")
     public ResponseEntity<List<Answer>> getAllAnswers() {
         List<Answer> answers = answerRepository.findAll();
