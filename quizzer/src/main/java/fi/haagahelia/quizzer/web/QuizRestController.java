@@ -13,12 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
+import fi.haagahelia.quizzer.domain.AnsverRepository;
+import fi.haagahelia.quizzer.domain.Answer;
 import fi.haagahelia.quizzer.domain.QuesitonRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
+import fi.haagahelia.quizzer.domain.Submission;
+import fi.haagahelia.quizzer.domain.SubmissionDto;
+import fi.haagahelia.quizzer.domain.SubmissionRepository;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
@@ -30,6 +36,12 @@ public class QuizRestController {
 
     @Autowired
     private QuesitonRepository questionRepository;
+
+    @Autowired
+    private AnsverRepository answerRepository;
+
+    @Autowired
+    private SubmissionRepository submissionRepository;
 
     // Get all published quizzes
     @GetMapping("/quizzes")
@@ -57,5 +69,18 @@ public class QuizRestController {
         }
         return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
     }
+
+    @PostMapping("/submissions")
+    public ResponseEntity<String> postSubmission(@RequestBody SubmissionDto submission) {
+        
+        Answer answer= answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer with id " + submission + " does not exist"));
+        Submission newSubmission = new Submission();
+        newSubmission.setAnswer(answer);
+        submissionRepository.save(newSubmission);
+        
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body("Answer submitted successfully");
+    }
+
 }
-    
