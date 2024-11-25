@@ -24,6 +24,8 @@ import fi.haagahelia.quizzer.domain.Submission;
 import fi.haagahelia.quizzer.domain.SubmissionRepository;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
+import fi.haagahelia.quizzer.domain.Category;
+import fi.haagahelia.quizzer.domain.CategoryRepository;
 
 
 @RestController
@@ -39,6 +41,9 @@ public class QuizRestController {
 
     @Autowired
     private SubmissionRepository submissionRepository;
+
+    @Autowired
+    private Category categoryRepository;
 
     // Get all published quizzes
     @GetMapping("/quizzes")
@@ -66,6 +71,11 @@ public class QuizRestController {
         }
         return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
     }
+    @GetMapping("/categories")
+    public ResponseEntity<List<Category>> getCategories(){
+        List<Category> categories = categoryRepository.findAll();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
 
     @GetMapping("/quizzes/{id}/submissions")
     public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
@@ -78,4 +88,5 @@ public class QuizRestController {
         return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
 }
+
     
