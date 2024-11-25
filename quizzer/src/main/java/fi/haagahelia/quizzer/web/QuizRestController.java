@@ -86,6 +86,15 @@ public class QuizRestController {
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with the id: " + categoryid + " does not exist"));
         return new ResponseEntity<>(category, HttpStatus.OK); // 200 OK
     }
+    @GetMapping("/categories/{id}/quizzes")
+    public ResponseEntity<List<Quiz>> getPublishedQuizzesByCategory(@PathVariable("id") Long categoryid) {
+        Category category = categoryRepository.findById(categoryid).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with the id: " + categoryid + " does not exist"));
+
+        List<Quiz> publishedQuizzes = quizRepository.findByCategoryAndPublished(category, true);
+
+        return new ResponseEntity<>(publishedQuizzes, HttpStatus.OK); // 200 OK
+    }
 
     @GetMapping("/quizzes/{id}/submissions")
     public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
