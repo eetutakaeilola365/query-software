@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
+import fi.haagahelia.quizzer.domain.AnsverRepository;
+import fi.haagahelia.quizzer.domain.Answer;
 import fi.haagahelia.quizzer.domain.QuesitonRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
@@ -30,6 +32,9 @@ public class QuizRestController {
 
     @Autowired
     private QuesitonRepository questionRepository;
+
+    @Autowired
+    private AnsverRepository answerRepository;
 
     // Get all published quizzes
     @GetMapping("/quizzes")
@@ -57,5 +62,11 @@ public class QuizRestController {
         }
         return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
     }
+
+    @GetMapping("/answers")
+    public ResponseEntity<List<Answer>> getAllAnswers() {
+        List<Answer> answers = answerRepository.findAll();
+    }
+    
 }
     

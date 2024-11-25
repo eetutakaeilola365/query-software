@@ -27,7 +27,7 @@ public class Quiz {
     private LocalDate date;
 
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")//, orphanRemoval = true
     private List <Question> questions;
 
     @JsonIgnore
