@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
 import java.util.List;
 
 import fi.haagahelia.quizzer.domain.AnsverRepository;
@@ -67,16 +69,13 @@ public class QuizRestController {
 
     @GetMapping("/quizzes/{id}/submissions")
     public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
-        Quiz quiz = getQuizById(quizid).getBody();
-        if (quiz == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Quiz quiz = quizRepository.findById(quizid).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id does not exist"));
         List<Submission> submissions = submissionRepository.findByAnswer(quiz);
         if (submissions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
-    
 }
     
