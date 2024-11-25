@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface QuizzRepository extends JpaRepository <Quiz, Long>{
     List<Quiz> findByName(String name);
     List<Quiz> findByPublished(boolean published);
+    List<Quiz> findByCategoryAndPublished(Category category, boolean published);
 }
 
 
