@@ -43,7 +43,7 @@ public class QuizRestController {
     private SubmissionRepository submissionRepository;
 
     @Autowired
-    private Category categoryRepository;
+    private CategoryRepository categoryRepository;
 
     // Get all published quizzes
     @GetMapping("/quizzes")
@@ -81,7 +81,7 @@ public class QuizRestController {
     public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
         Quiz quiz = quizRepository.findById(quizid).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id does not exist"));
-        List<Submission> submissions = submissionRepository.findByAnswer(quiz);
+        List<Submission> submissions = submissionRepository.findByQuiz(quiz);
         if (submissions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

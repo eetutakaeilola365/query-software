@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubmissionRepository extends JpaRepository <Submission, Long>{
-List<Submission> findByAnswer(Quiz quiz);
+List<Submission> findByAnswer(Answer answer);
+List<Submission> findByQuiz(Quiz quiz);
 }
