@@ -1,59 +1,48 @@
-import './quizlistStyle.css'
+import { useState, useEffect } from 'react';
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the Data Grid
+import { Link } from "react-router-dom"
+import { getQuizzes } from '../../quizApi';
 
-import {Link} from "react-router-dom"
-const QuizList = () => {
-  
-  const quizzes = [
+function QuizList() {
+
+  const [quizzes, setQuizzes] = useState([]);
+  const [colDefs, setColDefs] = useState([
+    { field: "name" },
+    { field: "description" },
+    { field: "published" },
+    { field: "date" },
     {
-      id: 1,
-      name: "The capital cities of Europe",
-      description: "Learn the capital cities of the European countries",
-      category: "Geography",
-      addedOn: "24.11.2023",
-    },
-    {
-      id: 2,
-      name: "Finnish vocabulary",
-      description: "Learn the most common Finnish words",
-      category: "Vocabulary",
-      addedOn: "25.11.2023",
-    },
-  ];
-    
+      cellRenderer: params => <EditCustomer data={params.data} handleFetch={handleFetch}></EditCustomer>, width: 120
+  },
+  ])
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
+
+  const handleFetch = () => {
+    getQuizzes()
+      .then(data => setQuizzes(data))
+      .catch(error => console.error(error))
+  };
+
 
   return (
-    <div className="quiz-list">
-      <header className="quiz-header">
-        <h1>Quizzes</h1>
-      </header>
+    <>
+      <div className="ag-theme-material" // applying the Data Grid theme
+                style={{ height: 500 }}>
 
-      <table className="quiz-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Added on</th>
-          </tr>
-        </thead>
-        <tbody>
-          {quizzes.map((quiz) => (
-            <tr key={quiz.id}>
-              <td>
-                <Link to={`/quiz/${quiz.id}`} className="quiz-link">
-                  {quiz.name}
-                </Link>
-                  
-                
-              </td>
-              <td>{quiz.description}</td>
-              <td>{quiz.category}</td>
-              <td>{quiz.addedOn}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+        <AgGridReact
+          rowData={quizzes}
+          columnDefs={colDefs}
+          pagination={true} // makes the list fit to page with pagination
+          paginationAutoPageSize={true} // automaticly selects the size how many rows on a pagination page
+          suppressCellFocus={true} // deletes cell highlight when clicking any cell in agGrid
+        />
+      </div>
+    </>
   );
 };
 
