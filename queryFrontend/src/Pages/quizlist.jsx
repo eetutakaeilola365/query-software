@@ -1,6 +1,8 @@
-import './quizlist.css'
+import './quizlistStyle.css'
+
 import {Link} from "react-router-dom"
 const QuizList = () => {
+  
   const quizzes = [
     {
       id: 1,
@@ -24,6 +26,7 @@ const QuizList = () => {
       <header className="quiz-header">
         <h1>Quizzes</h1>
       </header>
+
       <table className="quiz-table">
         <thead>
           <tr>
