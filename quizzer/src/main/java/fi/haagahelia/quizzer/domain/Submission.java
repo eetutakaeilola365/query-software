@@ -22,7 +22,7 @@ public class Submission {
     }
 
     public Submission(Long submissionid, Answer answer) {
-        submissionid = submissionid;
+        this.submissionid = submissionid;
         this.answer = answer;
     }
 
@@ -30,7 +30,7 @@ public class Submission {
     }
 
     public void setSubmissionid(Long submissionid) {
-        submissionid = submissionid;
+        this.submissionid = submissionid;
     }
 
     public Answer getAnswer() {
