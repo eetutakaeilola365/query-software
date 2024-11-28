@@ -1,4 +1,4 @@
-
+import './quizlist.css'
 import {Link} from "react-router-dom"
 const QuizList = () => {
   const quizzes = [
@@ -20,11 +20,11 @@ const QuizList = () => {
     
 
   return (
-    <div>
+    <div className="quiz-list">
       <header className="quiz-header">
         <h1>Quizzes</h1>
       </header>
-      <table>
+      <table className="quiz-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -37,7 +37,9 @@ const QuizList = () => {
           {quizzes.map((quiz) => (
             <tr key={quiz.id}>
               <td>
-                <Link to={`/quiz/${quiz.id}`}>{quiz.name}</Link>
+                <Link to={`/quiz/${quiz.id}`} className="quiz-link">
+                  {quiz.name}
+                </Link>
                   
                 
               </td>
