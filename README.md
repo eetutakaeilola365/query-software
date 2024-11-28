@@ -19,3 +19,36 @@ Developer guide:
 
 2. Starting the Back End application:
    - Clone the repository and in the repository run the command mvnw spring-boot:run
+3. Data model
+   
+   Entity relationship diagram:
+```mermaid
+   erDiagram
+      Quiz ||--o{ Question : has
+      Quiz {
+         long quizid
+         string name
+         string descrition
+         boolean published
+         localDate date
+      }
+      Question{
+         long questionid
+         string name
+         string difficulty
+      }
+      Answer{
+         long answerid
+         string choice
+         boolean correct
+      }
+      Category ||--o{ Quiz : contains
+      Category{
+         long categoryid
+         string name
+         string description
+      }
+      Submission{
+         long submissionid
+      }
+```
