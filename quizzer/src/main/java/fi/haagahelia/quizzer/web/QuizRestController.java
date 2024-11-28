@@ -19,10 +19,14 @@ import java.util.List;
 
 import fi.haagahelia.quizzer.domain.AnsverRepository;
 import fi.haagahelia.quizzer.domain.Answer;
+import fi.haagahelia.quizzer.domain.Category;
+import fi.haagahelia.quizzer.domain.CategoryRepository;
 import fi.haagahelia.quizzer.domain.QuesitonRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
+import fi.haagahelia.quizzer.domain.Submission;
 import fi.haagahelia.quizzer.domain.SubmissionDto;
+import fi.haagahelia.quizzer.domain.SubmissionRepository;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
 
