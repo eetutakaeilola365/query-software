@@ -159,7 +159,7 @@ public class QuizRestController {
     public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
         Quiz quiz = quizRepository.findById(quizid).orElseThrow(
             () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id does not exist"));
-        List<Submission> submissions = submissionRepository.findByQuiz(quiz);
+        List<Submission> submissions = submissionRepository.findByAnswerQuestionQuiz(quiz);
         if (submissions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
