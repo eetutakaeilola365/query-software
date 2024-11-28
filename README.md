@@ -22,9 +22,13 @@ Developer guide:
 3. Data model
    
    Entity relationship diagram:
+   
 ```mermaid
+   ---
+   title: Quizzer relationships
+   ---
    erDiagram
-      Quiz ||--o{ Question : has
+      Quiz ||--o{ Question : 
       Quiz {
          long quizid
          string name
@@ -32,17 +36,19 @@ Developer guide:
          boolean published
          localDate date
       }
+      Question ||--o{ Answer : 
       Question{
          long questionid
          string name
          string difficulty
       }
+      Answer ||--o{ Submission : 
       Answer{
          long answerid
          string choice
          boolean correct
       }
-      Category ||--o{ Quiz : contains
+      Category ||--o{ Quiz : 
       Category{
          long categoryid
          string name
