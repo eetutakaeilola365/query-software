@@ -111,10 +111,6 @@ public class QuizRestController {
         return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
     
-
-
-    
-
     @PostMapping("/submissions")
     public ResponseEntity<String> postSubmission(@RequestBody SubmissionDto submission) {
         
