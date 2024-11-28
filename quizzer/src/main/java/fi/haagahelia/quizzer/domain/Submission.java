@@ -3,12 +3,14 @@ package fi.haagahelia.quizzer.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Submission {
-    private Long Submissionid;
+    @Id
+    private Long submissionid;
 
     @JsonBackReference
     @ManyToOne
@@ -16,11 +18,11 @@ public class Submission {
     private Answer answer;
 
     public Long getSubmissionid() {
-        return Submissionid;
+        return submissionid;
     }
 
     public Submission(Long submissionid, Answer answer) {
-        Submissionid = submissionid;
+        submissionid = submissionid;
         this.answer = answer;
     }
 
@@ -28,7 +30,7 @@ public class Submission {
     }
 
     public void setSubmissionid(Long submissionid) {
-        Submissionid = submissionid;
+        submissionid = submissionid;
     }
 
     public Answer getAnswer() {
@@ -41,7 +43,7 @@ public class Submission {
 
     @Override
     public String toString() {
-        return "Submission [Submissionid=" + Submissionid + ", answer=" + answer + "]";
+        return "Submission [Submissionid=" + submissionid + ", answer=" + answer + "]";
     }
     
 }
