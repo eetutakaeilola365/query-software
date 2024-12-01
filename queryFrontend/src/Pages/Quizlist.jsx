@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the Data Grid
@@ -6,9 +7,23 @@ import { getQuizzes } from '../../quizApi';
 import Quiz from './Quiz'
 
 function QuizList() {
+  const navigate = useNavigate();
+  const handleQuizClick = (quizId) => {
+    navigate(`/quiz/${quizId}`); // Navigate to the quiz details page
+  };
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
-    { field: "name" },
+    { 
+      field: "name",
+      cellRenderer: params => (
+        <span
+          style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
+          onClick={() => handleQuizClick(params.data.id)}
+        >
+          {params.value}
+        </span>
+      ),
+    },
     { field: "description" },
     { field: "published" },
     { field: "date" },
