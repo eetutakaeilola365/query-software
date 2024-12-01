@@ -15,35 +15,41 @@ School project. In this project the end goal is to make a software where the use
    __Deployment link:__
    https://pepperpot-quizzer.onrender.com/quizlist
 
----
 
 ## Developer guide
 
 ### Architecture
+
+```mermaid
+flowchart LR
+    A[Frontend] -->|Sends API requests| B[Backend]
+    B -->|Fetches data / Stores data| C[Database]
+    B -->|Provides RESTful API| A
+    C -->|Retrieves data| B
+```
 #### Components
 The project is structured into three main components:
 
-#### 1. Back end:
-   The Back end is implemented using Java and Spring Boot. It handles the application’s logic, such as managing quizzes, questions, answers, Categories and user submissions. It communicates with the database and provides a RESTful API that the frontend uses. The backend uses Thymeleaf to provide the teacher interface, while the frontend handles the student interface.
-#### 2. Front end:
+ - __Back end:__
+   The Back end is implemented using Java and Spring Boot. It handles the application’s logic, such as managing quizzes, questions, answers, Categories and user submissions. It communicates with the database and provides a RESTful API that the frontend uses. The backend uses Thymeleaf to provide the teacher interface, while the front end handles the student interface.
+   
+- __Front end:__
    The Front end is implemented using React and Javascript. It makes requests to the RESTful API provided by the backend to retrieve and submit data. It uses libraries such as AG-Grid, React Router and MUI (Material UI). The front end provides the user interface for students, allowing them to take quizzes and view results. 
-#### 3. Database
+ - __Database:__
    The application uses PostgreSQL as the database for production, and H2 is used in the development environment. The database stores all the data related to quizzes, questions, answers, categories, and submissions. The backend interacts with the database using Spring Data JPA and Hibernate.
 
-### Backend 
+### How to start the Back end application
 
 #### 1. __System requirements:__
    - `Java version 17`
    - `maven`
 
-#### 2. __Starting the Back End application:__
+#### 2. __Starting the Back End application__
    - Clone the repository `git clone <repository-url>`
    - Navigate to the folder of the repository and open command line
    - In the folder run the command `mvnw spring-boot:run`
 
----
-
-### Frontend
+### How to start the Front end application:
 
 #### 1. __System requirements:__
    - `Node.js`
@@ -120,7 +126,6 @@ The project is structured into three main components:
       - Many to one (Submission → Answer)
 
 
----
 
 ### Entity relationship diagram:
 
