@@ -4,6 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the Data Grid
 import { getCategories } from '../../quizApi';
+import QuizList from './Quizlist';
 
 function Category() {
   const [Categories, setCategories] = useState([]);
@@ -11,7 +12,7 @@ function Category() {
     { field: "name" },
     { field: "description" },
     {
-      cellRenderer: params => <EditCustomer data={params.data} handleFetch={handleFetch}></EditCustomer>, width: 120
+      cellRenderer: params => <QuizList data={params.data} handleFetch={handleFetch}></QuizList>, width: 120
   },
   ])
 
@@ -40,7 +41,7 @@ function Category() {
       </header>
       <main style={styles.main}>
         <h2 style={styles.title}>Categories</h2>
-        <div className="ag-theme-material" style={{ height: 500, width: "90%", margin: "0 auto" }}>
+        <div className="ag-theme-material" style={{ height: 500 }}>
           <AgGridReact
             rowData={Categories}
             columnDefs={colDefs}

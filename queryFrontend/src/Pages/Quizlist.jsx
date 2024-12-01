@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the Data Grid
 import { getQuizzes } from '../../quizApi';
+import Quiz from './Quiz'
 
 function QuizList() {
   const [quizzes, setQuizzes] = useState([]);
@@ -12,7 +13,7 @@ function QuizList() {
     { field: "published" },
     { field: "date" },
     {
-      cellRenderer: params => <EditCustomer data={params.data} handleFetch={handleFetch}></EditCustomer>, width: 120
+      cellRenderer: params => <Quiz data={params.data} handleFetch={handleFetch}></Quiz>, width: 120
   },
   ])
 
