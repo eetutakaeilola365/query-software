@@ -27,15 +27,15 @@ flowchart LR
     B -->|Provides RESTful API| A
     C -->|Retrieves data| B
 ```
-#### Components
+### Components
 The project is structured into three main components:
 
- - __Back end:__
+ - __`Back end`:__
    The Back end is implemented using Java and Spring Boot. It handles the application’s logic, such as managing quizzes, questions, answers, Categories and user submissions. It communicates with the database and provides a RESTful API that the frontend uses. The backend uses Thymeleaf to provide the teacher interface, while the front end handles the student interface.
    
-- __Front end:__
+- __`Front end`:__
    The Front end is implemented using React and Javascript. It makes requests to the RESTful API provided by the backend to retrieve and submit data. It uses libraries such as AG-Grid, React Router and MUI (Material UI). The front end provides the user interface for students, allowing them to take quizzes and view results. 
- - __Database:__
+ - __`Database`:__
    The application uses PostgreSQL as the database for production, and H2 is used in the development environment. The database stores all the data related to quizzes, questions, answers, categories, and submissions. The backend interacts with the database using Spring Data JPA and Hibernate.
 
 ### How to start the Back end application
