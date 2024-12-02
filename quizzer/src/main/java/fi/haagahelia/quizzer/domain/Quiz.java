@@ -30,7 +30,7 @@ public class Quiz {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")//, orphanRemoval = true
     private List <Question> questions;
 
-    @JsonIgnore
+    
     @ManyToOne
     @JoinColumn(name="categoryid")
     private Category category;

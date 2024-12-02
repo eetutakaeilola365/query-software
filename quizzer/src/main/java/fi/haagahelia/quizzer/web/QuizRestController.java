@@ -65,6 +65,7 @@ public class QuizRestController {
     @ApiResponses(value={
         @ApiResponse(responseCode = "200", description = "Successful operation")
     })
+
     @GetMapping("/quizzes")
     public ResponseEntity<List<Quiz>> getAllPublishedQuizzes() {
         List<Quiz> quizzes = quizRepository.findByPublished(true);
@@ -78,6 +79,7 @@ public class QuizRestController {
         @ApiResponse(responseCode = "200", description = "Successful operation"),
         @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist")
     })
+    
     @GetMapping("/quizzes/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable("id") Long quizid) {
         Quiz quiz = quizRepository.findById(quizid).orElseThrow(
@@ -92,6 +94,7 @@ public class QuizRestController {
         @ApiResponse(responseCode = "200", description = "Successful operation"),
         @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist or the quiz has no questions")
     })
+
     @GetMapping("/quizzes/{id}/questions")
     public ResponseEntity<List<Question>> getQuizQuestionsById(@PathVariable("id") Long quizid) {
         Quiz quiz = getQuizById(quizid).getBody(); // Fetch the quiz object
