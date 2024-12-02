@@ -27,7 +27,7 @@ public class Answer {
     private Question question;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "submission") // , orphanRemoval = true
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answer") // , orphanRemoval = true
     private List<Submission> submissions;
 
     public List<Submission> getSubmissions() {
