@@ -165,7 +165,6 @@ public class QuizRestController {
 
     @PostMapping("/submissions")
     public ResponseEntity<String> postSubmission(@RequestBody SubmissionDto submission) {
-
         Answer answer = answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Answer with id " + submission + " does not exist"));

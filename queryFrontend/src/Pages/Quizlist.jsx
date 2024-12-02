@@ -18,7 +18,7 @@ function QuizList() {
       cellRenderer: params => (
         <span
           style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
-          onClick={() => handleQuizClick(params.data.id)}
+          onClick={() => handleQuizClick(params.data.quizid)}
         >
           {params.value}
         </span>

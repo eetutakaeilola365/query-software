@@ -59,15 +59,18 @@ export function getQuizQuestionsById(id){
     })
 }
 
-export function postSubmission(newSubmission){
+export function postSubmission(newSubmission) {
     return fetch(import.meta.env.VITE_API_URL+"/submissions", {
         method: "POST",
-        body: JSON.stringify(newSubmission)
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({answerOptionId: newSubmission})
     })
     .then(response => {
-        if(!response.ok)
-            throw new Error("Error in submitting answer:" + response.statusText);
+        if (!response.ok)
+            throw new Error("Error in submitting answer: " + response.statusText+JSON.stringify({answerOptionId: newSubmission}));
 
         return response.json();
-    })
+    });
 }
