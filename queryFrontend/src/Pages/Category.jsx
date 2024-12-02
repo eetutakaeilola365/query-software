@@ -19,7 +19,7 @@ function Category() {
       cellRenderer: params => (
       <span
         style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
-        onClick={() => handleCategoryClick(params.data.id)} // Handle category click
+        onClick={() => handleCategoryClick(params.data.categoryid)} // Handle category click
       >
         {params.value}
       </span>
