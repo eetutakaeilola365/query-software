@@ -4,16 +4,13 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the Data Grid
 import { getCategories } from '../../quizApi';
-import QuizList from './Quizlist';
+
 
 function Category() {
   const [Categories, setCategories] = useState([]);
   const [colDefs, setColDefs] = useState([
     { field: "name" },
     { field: "description" },
-    {
-      cellRenderer: params => <QuizList data={params.data} handleFetch={handleFetch}></QuizList>, width: 120
-  },
   ])
 
   useEffect(() => {
