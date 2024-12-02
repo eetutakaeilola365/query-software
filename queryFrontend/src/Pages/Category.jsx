@@ -1,16 +1,30 @@
-
+import { useNavigate } from 'react-router-dom'; // Importing useNavigate
 import { useState, useEffect } from 'react';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the Data Grid
 import { getCategories } from '../../quizApi';
 
-
 function Category() {
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/category/${categoryId}/quizzes`); // Navigate to the quizzes for that category
+  };
+
   const [Categories, setCategories] = useState([]);
   const [colDefs, setColDefs] = useState([
-    { field: "name" },
+    { field: "name",
+      cellRenderer: params => (
+      <span
+        style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
+        onClick={() => handleCategoryClick(params.data.id)} // Handle category click
+      >
+        {params.value}
+      </span>
+    ),},
     { field: "description" },
+
   ])
 
   useEffect(() => {
