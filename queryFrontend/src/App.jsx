@@ -9,6 +9,7 @@ import './App.css'; // Global styles
 function App() {
   return (
     <BrowserRouter>
+
     <Container maxWidth="xl">
       <Routes>
         <Route path="/" element={<QuizList />} />
