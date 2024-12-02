@@ -38,7 +38,7 @@ function Category() {
       </header>
       <main style={styles.main}>
         <h2 style={styles.title}>Categories</h2>
-        <div className="ag-theme-material" style={{ height: 500 }}>
+        <div className="ag-theme-material" style={{ width: 1000, height: 500 }}>
           <AgGridReact
             rowData={Categories}
             columnDefs={colDefs}

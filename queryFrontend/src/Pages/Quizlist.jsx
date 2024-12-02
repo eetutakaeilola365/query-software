@@ -25,11 +25,8 @@ function QuizList() {
       ), // able to go to quiz
     },
     { field: "description" },
-    { field: "published" },
+    { field: "Category" },
     { field: "date" },
-    {
-      cellRenderer: params => <Quiz data={params.data} handleFetch={handleFetch}></Quiz>, width: 120
-  },
   ])
 
   useEffect(() => {
@@ -57,7 +54,7 @@ function QuizList() {
       </header>
       <main style={styles.main}>
         <h2 style={styles.title}>Quizzes</h2>
-        <div className="ag-theme-material" style={{ height: 500, width: "90%", margin: "0 auto" }}>
+        <div className="ag-theme-material" style={{ height: 500, width: 1000, margin: "0 auto" }}>
           <AgGridReact
             rowData={quizzes}
             columnDefs={colDefs}
