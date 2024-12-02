@@ -34,11 +34,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
-@Tag(name = "Quiz", description = "Operations for managing and accessing quizzes and their categories, questions and answers" )
+@Tag(name = "Quiz", description = "Operations for managing and accessing quizzes and their categories, questions and answers")
 public class QuizRestController {
 
     @Autowired
@@ -56,14 +55,10 @@ public class QuizRestController {
     @Autowired
     private AnsverRepository answerRepository;
 
-
     // Get all published quizzes
-    @Operation(
-        summary = "Get all quizzes",
-        description = "Returns a list of all quizzes"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation")
+    @Operation(summary = "Get all quizzes", description = "Returns a list of all quizzes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation")
     })
 
     @GetMapping("/quizzes")
@@ -71,28 +66,25 @@ public class QuizRestController {
         List<Quiz> quizzes = quizRepository.findByPublished(true);
         return new ResponseEntity<>(quizzes, HttpStatus.OK); // 200 OK
     }
-    @Operation(
-        summary = "Get a quiz by id",
-        description = "Returns a quiz with the provided id"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation"),
-        @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist")
+
+    @Operation(summary = "Get a quiz by id", description = "Returns a quiz with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist")
     })
-    
+
     @GetMapping("/quizzes/{id}")
     public ResponseEntity<Quiz> getQuizById(@PathVariable("id") Long quizid) {
         Quiz quiz = quizRepository.findById(quizid).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the id: " + quizid + " does not exist"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Quiz with the id: " + quizid + " does not exist"));
         return new ResponseEntity<>(quiz, HttpStatus.OK); // 200 OK
     }
-    @Operation(
-        summary = "Get questions by quiz id",
-        description = "Returns a list of questions from a quiz with the provided id"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation"),
-        @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist or the quiz has no questions")
+
+    @Operation(summary = "Get questions by quiz id", description = "Returns a list of questions from a quiz with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist or the quiz has no questions")
     })
 
     @GetMapping("/quizzes/{id}/questions")
@@ -107,85 +99,80 @@ public class QuizRestController {
         }
         return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
     }
-    @Operation(
-        summary = "Get all categories",
-        description = "Returns a list of all categories created"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation")
+
+    @Operation(summary = "Get all categories", description = "Returns a list of all categories created")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation")
     })
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getCategories(){
+    public ResponseEntity<List<Category>> getCategories() {
         List<Category> categories = categoryRepository.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
-    @Operation(
-        summary = "Get a category by id",
-        description = "Returns a category with the provided id"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation"),
-        @ApiResponse(responseCode = "404", description = "Category with the provided id does not exist")
+
+    @Operation(summary = "Get a category by id", description = "Returns a category with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Category with the provided id does not exist")
     })
     @GetMapping("/categories/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long categoryid) {
         Category category = categoryRepository.findById(categoryid).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with the id: " + categoryid + " does not exist"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Category with the id: " + categoryid + " does not exist"));
         return new ResponseEntity<>(category, HttpStatus.OK); // 200 OK
     }
-    @Operation(
-        summary = "Get quizzes by category id",
-        description = "Returns a list of quizzes that belong to a category with the provided id"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation"),
-        @ApiResponse(responseCode = "404", description = "Category with the provided id does not exist")
+
+    @Operation(summary = "Get quizzes by category id", description = "Returns a list of quizzes that belong to a category with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Category with the provided id does not exist")
     })
+
     @GetMapping("/categories/{id}/quizzes")
     public ResponseEntity<List<Quiz>> getPublishedQuizzesByCategory(@PathVariable("id") Long categoryid) {
         Category category = categoryRepository.findById(categoryid).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category with the id: " + categoryid + " does not exist"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Category with the id: " + categoryid + " does not exist"));
 
         List<Quiz> publishedQuizzes = quizRepository.findByCategoryAndPublished(category, true);
 
         return new ResponseEntity<>(publishedQuizzes, HttpStatus.OK); // 200 OK
     }
-    @Operation(
-        summary = "Get submissions by quiz id",
-        description = "Returns a list of submissions from a quiz with the provided id"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "200", description = "Successful operation"),
-        @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist or the quiz has no submissions")
+
+    @Operation(summary = "Get submissions by quiz id", description = "Returns a list of submissions from a quiz with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist or the quiz has no submissions")
     })
+
     @GetMapping("/quizzes/{id}/submissions")
     public ResponseEntity<List<Submission>> getQuizSubmissionsById(@PathVariable("id") Long quizid) {
         Quiz quiz = quizRepository.findById(quizid).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id does not exist"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz with the provided id does not exist"));
         List<Submission> submissions = submissionRepository.findByAnswerQuestionQuiz(quiz);
         if (submissions.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(submissions, HttpStatus.OK);
     }
-    @Operation(
-        summary = "Get all submissions",
-        description = "Returns a list of questions from a quiz with the provided id"
-    )
-    @ApiResponses(value={
-        @ApiResponse(responseCode = "201", description = "Submission created succesfully"),
-        @ApiResponse(responseCode = "404", description = "Answer option does not exist")
+
+    @Operation(summary = "Get all submissions", description = "Returns a list of questions from a quiz with the provided id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Submission created succesfully"),
+            @ApiResponse(responseCode = "404", description = "Answer option does not exist")
     })
+
     @PostMapping("/submissions")
     public ResponseEntity<String> postSubmission(@RequestBody SubmissionDto submission) {
-        
-        Answer answer= answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer with id " + submission + " does not exist"));
+
+        Answer answer = answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Answer with id " + submission + " does not exist"));
         Submission newSubmission = new Submission();
         newSubmission.setAnswer(answer);
         submissionRepository.save(newSubmission);
-        
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body("Answer submitted successfully");
     }
 
