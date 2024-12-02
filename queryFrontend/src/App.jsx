@@ -5,6 +5,7 @@ import { Container } from "@mui/material";
 import Category from "./Pages/Category"; // Categories page
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import './App.css'; // Global styles
+import Results from "./Pages/Results";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
 
     <Container maxWidth="xl">
       <Routes>
+        <Route path="/results" element={<Results />} />
         <Route path="/" element={<QuizList />} />
         <Route path="/quiz/:id" element={<Quiz />} />
         <Route path="/quiz" element={<Quiz />} />

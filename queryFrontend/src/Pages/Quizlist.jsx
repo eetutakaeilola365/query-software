@@ -22,7 +22,7 @@ function QuizList() {
         >
           {params.value}
         </span>
-      ),
+      ), // able to go to quiz
     },
     { field: "description" },
     { field: "published" },
