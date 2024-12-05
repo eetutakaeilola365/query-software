@@ -1,6 +1,7 @@
 import { getQuiz, postSubmission } from "../../quizApi";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 function Quiz() {
   const { id } = useParams();
@@ -43,32 +44,31 @@ function Quiz() {
 
   return (
     <div>
-      <h1>{quiz.name}</h1>
-      <p>{quiz.description}</p>
-      <p>Category: {quiz.category.name}</p>
-      <p>Date: {quiz.date}</p>
-      {quiz.questions.map((question) => (
-        <div key={question.questionid}>
-          <h2>{question.name}</h2>
-          <p>Difficulty: {question.difficulty}</p>
-          <ul>
-            {question.answers.map((answer) => (
-              <li key={answer.answerid}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={selectedAnswer === answer.answerid}
-                    onChange={() => handleAnswerChange(answer.answerid)}
-                  />
-                  {answer.choice}
-                </label>
-              </li>
-            ))}
-          </ul>
-          <button onClick={handleSubmit}>Submit</button>
-        </div>
-      ))}
-
+        <h1>{quiz.name}</h1>
+        <p>{quiz.description}</p>
+        <p>Category: {quiz.category.name}</p>
+        <p>Date: {quiz.date}</p>
+        {quiz.questions.map((question) => (
+          <div key={question.questionid} class="question">
+            <h2>{question.name}</h2>
+            <p>Difficulty: {question.difficulty}</p>
+            <ul>
+              {question.answers.map((answer) => (
+                <li key={answer.answerid}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={selectedAnswer === answer.answerid}
+                      onChange={() => handleAnswerChange(answer.answerid)}
+                    />
+                    {answer.choice}
+                  </label>
+                </li>
+              ))}
+            </ul>
+            <Button variant="contained" color="inherit" onClick={handleSubmit}>Submit</Button>
+          </div>
+        ))}
     </div>
   );
 }
