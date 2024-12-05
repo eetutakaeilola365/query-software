@@ -2,6 +2,11 @@ import { getQuiz, postSubmission } from "../../quizApi";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import './Quiz.css'
 
 function Quiz() {
   const { id } = useParams();
@@ -42,19 +47,32 @@ function Quiz() {
     return <div>Loading...</div>;
   }
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: '#fff',
+    ...theme.typography.body1,
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.palette.text.primary,
+    ...theme.applyStyles('dark', {
+      backgroundColor: '#1A2027',
+    }),
+  }));
+
   return (
     <div>
         <h1>{quiz.name}</h1>
         <p>{quiz.description}</p>
         <p>Category: {quiz.category.name}</p>
         <p>Date: {quiz.date}</p>
+        <Stack>
         {quiz.questions.map((question) => (
           <div key={question.questionid} class="question">
+            <Item>
             <h2>{question.name}</h2>
             <p>Difficulty: {question.difficulty}</p>
             <ul>
               {question.answers.map((answer) => (
-                <li key={answer.answerid}>
+                <li  key={answer.answerid} className="no-bullets">
                   <label>
                     <input
                       type="checkbox"
@@ -67,8 +85,10 @@ function Quiz() {
               ))}
             </ul>
             <Button variant="contained" color="inherit" onClick={handleSubmit}>Submit</Button>
+            </Item>
           </div>
         ))}
+        </Stack>
     </div>
   );
 }

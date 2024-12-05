@@ -44,7 +44,7 @@ function QuizList() {
     <div>
       <main>
         <h2>Quizzes</h2>
-        <div className="ag-theme-material" style={{ height: 500, width: 1000, margin: "0 auto" }}>
+        <div className="ag-theme-material" style={{ height: 500, maxWidth: 1280, margin: "0 auto" }}>
           <AgGridReact
             rowData={quizzes}
             columnDefs={colDefs}
