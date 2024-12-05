@@ -30,6 +30,9 @@ public class Quiz {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")//, orphanRemoval = true
     private List <Question> questions;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quiz")
+    private List <Review> reviews;
+
     
     @ManyToOne
     @JoinColumn(name="categoryid")
@@ -106,18 +109,23 @@ public class Quiz {
     public void setCategory(Category category) {
         this.category = category;
     }
+    
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;                                                                                                                                         
+    }
 
     @Override
     public String toString() {
         return "Quiz [quizid=" + quizid + ", name=" + name + ", description=" + description + ", published=" + published
-                + ", date=" + date + ", questions=" + questions + ", category=" + category + "]";
+                + ", date=" + date + ", questions=" + questions + ", reviews=" + reviews + ", category=" + category
+                + "]";
     }
-    
-    
-    
-    
-    
 
+    
     
 
 }
