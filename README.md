@@ -130,7 +130,7 @@ The project is structured into three main components:
    
     **Attributes:**
       - `Reviewid` (long) - unique identifier for the review
-      - `Nicnname` (string) - reviewer's nicname
+      - `Nickname` (string) - reviewer's nicname
       - `Rating` (integer) - A score (1-5) for the quiz where 1 is bad and 5 is great
       - `Reviewtext` - A short text to give written feedback
 
