@@ -164,7 +164,7 @@ public class QuizRestController {
     })
 
     @PostMapping("/submissions")
-    public ResponseEntity<String> postSubmission(@RequestBody SubmissionDto submission) {
+    public ResponseEntity<?> postSubmission(@RequestBody SubmissionDto submission) {
         Answer answer = answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Answer with id " + submission + " does not exist"));
@@ -172,7 +172,7 @@ public class QuizRestController {
         newSubmission.setAnswer(answer);
         submissionRepository.save(newSubmission);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Answer submitted successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body(newSubmission);
     }
 
 }

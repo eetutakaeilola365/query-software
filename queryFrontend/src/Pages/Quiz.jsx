@@ -20,7 +20,7 @@ function Quiz() {
 
   const handleSubmit = () => {
     if (selectedAnswer) {
-      postSubmission( selectedAnswer )
+      postSubmission(selectedAnswer)
         .then(response => {
           console.log("Submission successful:", response);
         })
