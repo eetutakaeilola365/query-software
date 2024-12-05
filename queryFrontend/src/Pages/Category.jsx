@@ -23,7 +23,8 @@ function Category() {
         {params.value}
       </span>
     ),},
-    { field: "description" },
+    { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
+    flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
 
   ])
 
@@ -46,13 +47,13 @@ function Category() {
             Quizzes
           </a>
           <a href="/category" style={styles.navLink}>
-            Category
+            Categories
           </a>
         </nav>
       </header>
       <main style={styles.main}>
         <h2 style={styles.title}>Categories</h2>
-        <div className="ag-theme-material" style={{ width: 1000, height: 500 }}>
+        <div className="ag-theme-material" style={{height: 500, width: 1000, margin: "0 auto"}}>
           <AgGridReact
             rowData={Categories}
             columnDefs={colDefs}

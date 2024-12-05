@@ -24,8 +24,9 @@ function QuizList() {
         </span>
       ), // able to go to quiz
     },
-    { field: "description" },
-    { field: "Category" },
+    { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
+    flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
+    { field: "category.name" },
     { field: "date" },
   ])
 
@@ -48,7 +49,7 @@ function QuizList() {
             Quizzes
           </a>
           <a href="/category" style={styles.navLink}>
-            Category
+            Categories
           </a>
         </nav>
       </header>
