@@ -7,6 +7,7 @@ import Category from "./Pages/Category"; // Categories page
 import { Routes, BrowserRouter, Route } from "react-router-dom";
 import './App.css'; // Global styles
 import Results from "./Pages/Results";
+import ResultsList from "./Pages/ResultsList";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
 
     <Container maxWidth="xl">
       <Routes>
-        <Route path="/results" element={<Results />} />
+        <Route path="/results/:quizId" element={<ResultsList />} />
         <Route path="/" element={<QuizList />} />
         <Route path="/quiz/:id" element={<Quiz />} />
         <Route path="/category/:id" element={<Category />} />

@@ -11,6 +11,9 @@ function QuizList() {
   const handleQuizClick = (quizId) => {
     navigate(`/quiz/${quizId}`); // Navigate to the quiz details page
   };
+  const handleResultsClick = (quizId) => {
+    navigate(`/results/${quizId}`); // Navigate to the results page
+  };
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
     { 
@@ -28,6 +31,22 @@ function QuizList() {
     flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
     { field: "category.name" },
     { field: "date" },
+    {
+      headerName: "Results",
+      cellRenderer: params => (
+        <span
+          style={{
+            color: "#1976d2",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+          onClick={() => handleResultsClick(params.data.quizid)} // Lisää navigointi tulossivulle
+        >
+          See Results
+        </span>
+      ),
+      width: 120,
+    },
   ])
 
   useEffect(() => {
