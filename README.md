@@ -79,6 +79,7 @@ The project is structured into three main components:
    **Relationships:**
       - One to many (Quiz → Question)
       - Many to one (Quiz → Category)
+      - One to Many (Quiz → Review)
 
 2. `Question` Entity represents a question belonging to a quiz (Quiz) and contains answer options (Answer).
 
@@ -124,7 +125,18 @@ The project is structured into three main components:
 
    **Relationships:**
       - Many to one (Submission → Answer)
+        
+6. `Review` Entity represents the user's review for a Quiz (Quiz).
+   
+    **Attributes:**
+      - `Reviewid` (long) - unique identifier for the review
+      - `Nicnname` (string) - reviewer's nicname
+      - `Rating` (integer) - A score (1-5) for the quiz where 1 is bad and 5 is great
+      - `Reviewtext` - A short text to give written feedback
 
+    **Relationships:**
+      - Many to one (Review → Quiz)
+      
 
 
 ### Entity relationship diagram:
@@ -132,6 +144,7 @@ The project is structured into three main components:
 ```mermaid
 erDiagram
    Quiz ||--o{ Question : ""
+   Quiz ||--o{ Review : ""
    Quiz {
       long quizid
       string name
@@ -159,4 +172,11 @@ erDiagram
    }
    Submission{
       long submissionid
+   }
+   
+   Review{
+      long reviewid
+      string nickname
+      integer rating
+      string reviewtext
    }
