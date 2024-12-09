@@ -16,6 +16,11 @@ function QuizList() {
     navigate(`/quiz/${quizId}`); // Navigate to the quiz details page
   };
 
+
+  const handleSeeReviewsClick = (quizId) => {
+    navigate(`/quiz/${quizId}/reviews`); // Navigate to the reviews page for the quiz
+  };
+  
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
     { 
@@ -33,6 +38,16 @@ function QuizList() {
     flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
     { field: "category.name" },
     { field: "date" },
+    { 
+      headerName: "See Reviews",
+      cellRenderer: params => (
+        <span
+          style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
+          onClick={() => handleSeeReviewsClick(params.data.quizid)}
+        >
+          See Reviews
+        </span>
+      ),}
     //Tähän results page navigaatio
     //Tähän Review page navigaatio
   ])

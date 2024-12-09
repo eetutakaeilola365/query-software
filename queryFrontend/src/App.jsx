@@ -36,7 +36,7 @@ function App() {
           <Route path="/categories/:id" element={<Category />} />
           <Route path="/categories" element={<Category />} />
           <Route path="/categories/:id/quizzes" element={<CategoryQuizzes />} />
-          <Route path="/review" element={<Review />}/>
+          <Route path="/quiz/:id/reviews" element={<Review />}/>
           <Route path="/writereview" element={<WriteReview />} />
         </Routes>
         </Container>

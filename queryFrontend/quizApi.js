@@ -99,4 +99,14 @@ export function postSubmission(newSubmission) {
     
             return response.json();
         });
-}
+    }
+    export function getReviewsByQuizId(id){
+        return fetch(import.meta.env.VITE_API_URL+"/quizzes/"+id+"/reviews")
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error in fetch" + response.statusText);
+    
+            return response.json();
+        })
+    };
+
