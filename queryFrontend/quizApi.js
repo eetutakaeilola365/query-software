@@ -84,3 +84,19 @@ export function postSubmission(newSubmission) {
         return response.json();
     });
 }
+
+    export function postReview(newReview) {
+        return fetch(import.meta.env.VITE_API_URL+"/reviews", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({quizId: newReview})
+        })
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error in submitting answer: " + response.statusText+JSON.stringify({quizId: newReview}));
+    
+            return response.json();
+        });
+}
