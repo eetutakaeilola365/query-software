@@ -122,10 +122,10 @@ export function getResultsByQuizID(id) {
 }
 
 export function getQuizSubmissionsById(quizId) {
-    return fetch(`${import.meta.env.VITE_BACKEND_URL}/api/seeresults/${quizId}`)
+    return fetch(import.meta.env.VITE_API_URL + "/seeresults/" + quizId)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error in fetch: ${response.statusText}`);
+                throw new Error("Error in fetch: " + response.statusText);
             }
             return response.json();
         })

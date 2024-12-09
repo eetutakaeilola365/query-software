@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { postSubmission, getReviewsByQuizId } from "../../quizApi";
+import { postReview, getReviewsByQuizId } from "../../quizApi";
 
 function WriteReview() {
   const today = new Date();
   const formattedDate = today.toLocaleDateString();
   const { id } = useParams(); // Get quiz ID from URL params
   //const [quiz, setQuiz] = useState(null); // State to hold quiz details
-  const [review, setReview] = useState({
-    username: "",
-    rating: "2",
-    text: "",
-  });
+  const [review, setReview] = useState([
+    {field: "nickname"},
+    {field: "rating"},
+    {field: "reviewtext"},
+]);
   const [error, setError] = useState(""); // State for error messages
 
   // Fetch quiz details when the component mounts
@@ -27,16 +27,17 @@ function WriteReview() {
 
     fetchReviewData();
   }, [id]);
-  const handleSubmit = () => {
-    if (getReviewsByQuizId) {
-      postSubmission(getReviewsByQuizId)
-        .then(response => {
-          console.log("Submission successful:", response);
-        })
-        .catch(err => {
-          console.error("Submission error:", err);
-          setError(err.message);
-        });
+  const handleSubmit = async() => {
+    if (review.nickname && review.rating && review.reviewtext) {
+        try {
+            const response = await postReview(id, review); // Assuming postReview accepts id and review object
+            console.log("Submission successful:", response);
+            setError("");
+            
+          } catch (err) {
+            console.error("Submission error:", err);
+            setError("Failed to submit the review. Please try again.");
+          } 
     } else {
       setError("Please select an answer before submitting.");
     }
@@ -64,9 +65,9 @@ function WriteReview() {
       </header>
       <div>
         <label>
-          Username:{" "}
+          Nickname:{" "}
           <input
-            name="username"
+            name="nickname"
             value={review.username}
             onChange={handleInputChange}
           />
@@ -91,7 +92,7 @@ function WriteReview() {
             Write your review:{" "}
             <input
               type="text"
-              name="text"
+              name="reviewtext"
               value={review.text}
               onChange={handleInputChange}
             />
