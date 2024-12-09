@@ -8,10 +8,6 @@ import { getQuizzes } from '../../quizApi';
 
 function QuizList() {
   const navigate = useNavigate();
-        /*Pääsee results pagelle. Täytyy jotenkin laittaa se linkki samalle tasolle kun tuo alla oleva olio 
-    const handleResults = (Results) => {
-        navigate(`/results${Results}`);
-      };*/
   const handleQuizClick = (quizId) => {
     navigate(`/quiz/${quizId}`); // Navigate to the quiz details page
   };
@@ -26,7 +22,7 @@ function QuizList() {
   };
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
-    { 
+    {
       field: "name",
       cellRenderer: params => (
         <span
@@ -41,7 +37,7 @@ function QuizList() {
     flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
     { field: "category.name" },
     { field: "date" },
-    { 
+    {
       headerName: "See Reviews",
       cellRenderer: params => (
         <span
@@ -50,7 +46,7 @@ function QuizList() {
         >
           See Reviews
         </span>
-      ),}
+      ),},
     //Tähän results page navigaatio
     //Tähän Review page navigaatio
     {
