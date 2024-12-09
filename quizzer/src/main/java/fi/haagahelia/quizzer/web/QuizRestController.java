@@ -38,6 +38,8 @@ import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
 import fi.haagahelia.quizzer.domain.ReviewRepository;
 import fi.haagahelia.quizzer.domain.ReviewDto;
+import fi.haagahelia.quizzer.domain.SubmissionService;
+
 
 @RestController
 @RequestMapping("/api")
@@ -62,6 +64,9 @@ public class QuizRestController {
 
         @Autowired
         private ReviewRepository reviewRepository;
+
+        @Autowired
+        private SubmissionService submissionService;
 
         // Get all published quizzes
         @Operation(summary = "Get all quizzes", description = "Returns a list of all quizzes")
@@ -102,9 +107,6 @@ public class QuizRestController {
                         return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
                 }
                 List<Question> questions = questionRepository.findByQuiz(quiz);
-                if (questions.isEmpty()) {
-                        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 No Content
-                }
                 return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
         }
 
@@ -209,8 +211,47 @@ public class QuizRestController {
                         reviewRepository.save(newReview);
 
                         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
-                }
+                    }
 
+        
         }
 
+        @Operation(summary = "Get results for a quiz", description = "Returns total answers and total right answers for a quiz")
+        @ApiResponses(value = {
+                        // The responseCode property defines the HTTP status code of the response
+                        @ApiResponse(responseCode = "200", description = "Successful operation"),
+                        @ApiResponse(responseCode = "404", description = "Quiz with the provided id not found")
+        })
+
+        @GetMapping("/seeresults/{quizId}")
+        @ResponseBody
+        public Map<String, Object> getQuizResults(@PathVariable Long quizId) {
+
+                Quiz quiz = quizRepository.findById(quizId)
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz not found"));
+
+                List<Question> questions = questionRepository.findByQuiz(quiz);
+                List<Submission> submissions = submissionRepository.findByAnswerQuestionQuiz(quiz);
+
+                List<Map<String, Object>> questionDetails = questions.stream()
+                                .map(question -> {
+                                        Map<String, Object> questionMap = Map.of(
+                                                        "questionText", question.getName(),
+                                                        "difficulty", question.getDifficulty(),
+                                                        "totalAnswers", submissionRepository.findByAnswerQuestion(question).size(),
+                                                        "totalRightAnswers", submissionService.countCorrectAnswers(submissionRepository.findByAnswerQuestion(question))
+                                                        );
+                                        return questionMap;
+                                })
+                                .toList();
+
+                return Map.of(
+                                "quizName", quiz.getName(),
+                                "questionCount", questions.size(),
+                                "submissionsCount", submissions.size(),
+                                "questions", questionDetails
+                                );
+
+        
 }
+};
