@@ -26,6 +26,7 @@ import fi.haagahelia.quizzer.domain.CategoryRepository;
 import fi.haagahelia.quizzer.domain.QuesitonRepository;
 import fi.haagahelia.quizzer.domain.Quiz;
 import fi.haagahelia.quizzer.domain.QuizzRepository;
+import fi.haagahelia.quizzer.domain.Review;
 import fi.haagahelia.quizzer.domain.Submission;
 import fi.haagahelia.quizzer.domain.SubmissionDto;
 import fi.haagahelia.quizzer.domain.SubmissionRepository;
@@ -35,6 +36,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
+import fi.haagahelia.quizzer.domain.ReviewRepository;
+import fi.haagahelia.quizzer.domain.ReviewDto;
 
 @RestController
 @RequestMapping("/api")
@@ -56,6 +59,9 @@ public class QuizRestController {
 
         @Autowired
         private AnsverRepository answerRepository;
+
+        @Autowired
+        private ReviewRepository reviewRepository;
 
         // Get all published quizzes
         @Operation(summary = "Get all quizzes", description = "Returns a list of all quizzes")
@@ -178,47 +184,34 @@ public class QuizRestController {
                 return ResponseEntity.status(HttpStatus.CREATED).body(newSubmission);
         }
 
-        @Operation(summary = "Get results for a quiz", description = "Returns total answers and total right answers for a quiz")
-        @ApiResponses(value = {
-                        // The responseCode property defines the HTTP status code of the response
-                        @ApiResponse(responseCode = "200", description = "Successful operation"),
-                        @ApiResponse(responseCode = "404", description = "Quiz with the provided id not found")
-        })
-
-        @GetMapping("/seeresults/{quizId}")
-        public Map<String, Object> getQuizResults(@PathVariable Long quizId) {
-
-                Quiz quiz = quizRepository.findById(quizId)
-                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quiz not found"));
-
-                List<Question> questions = questionRepository.findByQuiz(quiz);
-                List<Submission> submissions = submissionRepository.findByAnswerQuestion(null);
-
-                int totalRightAnswers = 0;
-
-                for (int i = 0; i < submissions.size(); i++) {
-                        Submission submission = submissions.get(i);
-                        if (submissions.correct == true) {
-                                totalRightAnswers++;
-                        }
-                }
-
-                List<Map<String, Object>> questionDetails = questions.stream()
-                                .map(question -> {
-                                        Map<String, Object> questionMap = Map.of(
-                                                        "questionText", question.getName(),
-                                                        "difficulty", question.getDifficulty(),
-                                                        "totalAnswers", submissionRepository.findByAnswerQuestion(question).size(),
-                                                        "totalRightAnswers", question.getTotalRightAnswers());
-                                        return questionMap;
-                                })
-                                .toList();
-
-                return Map.of(
-                                "quizName", quiz.getName(),
-                                "questionCount", questions.size(),
-                                "questions", questionDetails,
-                                "totalAnswers", totalAnswers,
-                                "totalRightAnswers", totalRightAnswers);
+        @GetMapping("/quizzes/{Id}/reviews")
+        public ResponseEntity<List<Review>> getQuizReviewsById(@PathVariable("Id") Long quizId) {
+                Quiz quiz = quizRepository.findById(quizId).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Quiz with the id: " + quizId + " does not exist"));
+                List<Review> reviews = reviewRepository.findByQuiz(quiz);
+                return new ResponseEntity<>(reviews, HttpStatus.OK); // 200 OK
         }
+        @PostMapping("/reviews")
+        public ResponseEntity<?> postReviews(@RequestBody ReviewDto review) {
+                Quiz quiz = quizRepository.findById(review.getQuizId()).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Quiz with id " + review.getQuizId() + " does not exist"));
+
+                if (!quiz.getPublished()) {
+                        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Quiz not published");
+                    }
+                    
+                    else{
+                        Review newReview = new Review();
+                        newReview.setQuiz(quiz);
+                        reviewRepository.save(newReview);
+        
+                        return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
+                    }
+
+        
+        }
+
+        
 }

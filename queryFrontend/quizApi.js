@@ -85,6 +85,32 @@ export function postSubmission(newSubmission) {
     });
 }
 
+    export function postReview(newReview) {
+        return fetch(import.meta.env.VITE_API_URL+"/reviews", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({quizId: newReview})
+        })
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error in submitting answer: " + response.statusText+JSON.stringify({quizId: newReview}));
+    
+            return response.json();
+        });
+    }
+    export function getReviewsByQuizId(id){
+        return fetch(import.meta.env.VITE_API_URL+"/quizzes/"+id+"/reviews")
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error in fetch" + response.statusText);
+    
+            return response.json();
+        })
+    };
+
+
 export function getResultsByQuizID(id) {
     return fetch(import.meta.env.VITE_API_URL + "/quizzes/" + id + "/submissions")
         .then(response => {

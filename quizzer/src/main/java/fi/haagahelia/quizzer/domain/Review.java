@@ -22,7 +22,7 @@ public class Review {
     private Quiz quiz;
 
     private String nickname;
-    private String rating;
+    private Integer rating;
     private String reviewtext;
 
     public Review () {}
@@ -39,10 +39,10 @@ public class Review {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-    public String getRating() {
+    public Integer getRating() {
         return rating;
     }
-    public void setRating(String rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
     public String getReviewtext() {
@@ -51,12 +51,21 @@ public class Review {
     public void setReviewtext(String reviewtext) {
         this.reviewtext = reviewtext;
     }
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
 
     @Override
     public String toString() {
         return "Review [reviewid=" + reviewid + ", quiz=" + quiz + ", nickname=" + nickname + ", rating=" + rating
                 + ", reviewtext=" + reviewtext + "]";
     }
+
+    
 
     
 
