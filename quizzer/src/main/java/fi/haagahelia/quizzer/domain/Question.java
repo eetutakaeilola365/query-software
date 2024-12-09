@@ -33,11 +33,14 @@ public class Question {
     @JoinColumn(name = "quizid")
     private Quiz quiz;
 
-    public Question (){}
+    public Question (){
+        super();
+    }
 
     public Question(String name, String difficulty) {
         this.name = name;
         this.difficulty = difficulty;
+
     }
 
     
@@ -72,6 +75,10 @@ public class Question {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
     @Override

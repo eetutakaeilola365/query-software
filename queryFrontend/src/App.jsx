@@ -11,7 +11,6 @@ import QuizList from "./Pages/Quizlist"; // Main quizzes list
 import Quiz from "./Pages/Quiz";
 import CategoryQuizzes from "./Pages/CategoryQuizzes";
 import Category from "./Pages/Category"; // Categories page
-import Results from "./Pages/Results";
 import ResultsList from "./Pages/ResultsList";
 
 function App() {
@@ -29,7 +28,7 @@ function App() {
         </AppBar>
         <Container >
         <Routes>
-          <Route path="/results" element={<Results />} />
+          <Route path="/results/:quizId" element={<ResultsList />} />
           <Route path="/" element={<QuizList />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/categories/:id" element={<Category />} />

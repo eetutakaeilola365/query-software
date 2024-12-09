@@ -34,6 +34,22 @@ function CategoryQuizzes() {
             flex: 1 // venyttää fieldiä tarpeeks et koko description mahtuu siihen
         },
         { field: "date", headerName: "Added on " },
+        {
+            headerName: "Results",
+            cellRenderer: params => (
+              <span
+                style={{
+                  color: "#1976d2",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleResultsClick(params.data.quizid)} // Lisää navigointi tulossivulle
+              >
+                See Results
+              </span>
+            ),
+            width: 120,
+          },
     ]);
 
 

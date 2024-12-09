@@ -1,77 +1,84 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-material.css";
+import Typography from "@mui/material/Typography";
+import { useParams } from "react-router-dom";
+import { getQuizSubmissionsById } from "../../quizApi";
 
 function ResultsList() {
-  const { quizId } = useParams(); // Quiz ID from URL
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState({});
+  const [questions, setQuestions] = useState([]);
+  const { quizId } = useParams();
 
-  // Fetch data from API and process results
-  useEffect(() => {
-    fetch(`/api/quizzes/${quizId}`)
-      .then((response) => response.json())
-      .then((data) => processResults(data))
-      .catch((error) => console.error("Error fetching quiz results:", error));
-  }, [quizId]);
-
-  const processResults = (quizData) => {
-    const processedQuestions = quizData.questions.map((question) => {
-      const totalAnswers = question.answers.reduce(
-        (sum, answer) => sum + (answer.submissions?.length || 0),
-        0
-      );
-      const correctAnswers = question.answers
-        .filter((answer) => answer.correct)
-        .reduce((sum, answer) => sum + (answer.submissions?.length || 0), 0);
-      const wrongAnswers = totalAnswers - correctAnswers;
-      const correctPercentage = totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0;
-
-      return {
-        question: question.name,
-        difficulty: question.difficulty || "Unknown",
-        totalAnswers,
-        correctPercentage: correctPercentage.toFixed(2),
-        correctAnswers,
-        wrongAnswers,
-      };
-    });
-
-    setResults(processedQuestions);
+  const gridOptions = {
+    autoSizeStrategy: {
+      type: "fitGridWidth",
+    },
+    columnDefs: [
+      { field: "questionText", headerName: "Question", flex: 1 },
+      { field: "difficulty", headerName: "Difficulty", width: 120 },
+      { field: "totalAnswers", headerName: "Total answers", width: 150 },
+      {
+        headerName: "Correct answer %",
+        valueGetter: function (params) {
+          const percent = Math.round(
+            (params.data.totalRightAnswers / params.data.totalAnswers) * 100
+          );
+          return percent + "%";
+        },
+        width: 180,
+      },
+      { field: "totalRightAnswers", headerName: "Correct answers", width: 150 },
+      {
+        headerName: "Wrong answers",
+        valueGetter: (p) => p.data.totalAnswers - p.data.totalRightAnswers,
+        width: 150,
+      },
+    ],
   };
 
-  const colDefs = [
-    { field: "question", headerName: "Question", sortable: true, filter: true, flex: 1 },
-    { field: "difficulty", headerName: "Difficulty", sortable: true, filter: true, width: 120 },
-    { field: "totalAnswers", headerName: "Total Answers", sortable: true, filter: true, width: 150 },
-    {
-      field: "correctPercentage",
-      headerName: "Correct Answer %",
-      sortable: true,
-      filter: true,
-      width: 180,
-      valueFormatter: (params) => `${params.value}%`,
-    },
-    { field: "correctAnswers", headerName: "Correct Answers", sortable: true, width: 150 },
-    { field: "wrongAnswers", headerName: "Wrong Answers", sortable: true, width: 150 },
-  ];
+  async function fetchResults() {
+    try {
+      const quizIdNumber = parseInt(quizId, 10);
+      const data = await getQuizSubmissionsById(quizIdNumber);
+
+      // Process data into the required format
+      setResults({
+        totalAnswers: data.totalAnswers,
+        totalRightAnswers: data.totalRightAnswers,
+        quizId: data.quizId,
+        questionCount: data.questionCount,
+        quizName: data.quizName,
+      });
+
+      setQuestions(data.questions);
+    } catch (error) {
+      console.error("Error fetching results:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchResults();
+  }, [quizId]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Results</h1>
+    <>
+      <Typography variant="h4">Results of "{results.quizName}"</Typography>
+      <div>
+        {results.totalAnswers} answers to {results.questionCount} questions
+      </div>
       <div
-        className="ag-theme-alpine"
-        style={{ width: "100%", height: "500px" }}
+        className="ag-theme-material"
+        style={{ height: 500, width: "100%", margin: "0 auto" }}
       >
         <AgGridReact
-          rowData={results}
-          columnDefs={colDefs}
-          pagination={true}
-          paginationAutoPageSize={true}
+          rowData={questions}
+          gridOptions={gridOptions}
+          suppressCellFocus={true}
         />
       </div>
-    </div>
+    </>
   );
 }
 
