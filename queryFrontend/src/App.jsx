@@ -7,11 +7,10 @@ import AppBar from "@mui/material/AppBar"
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css'; // Global styles
 
-import QuizList from "./Pages/Quizlist"; // Main quizzes list
+import QuizList from "./Pages/quizlist"; // Main quizzes list
 import Quiz from "./Pages/Quiz";
 import CategoryQuizzes from "./Pages/CategoryQuizzes";
 import Category from "./Pages/Category"; // Categories page
-import Results from "./Pages/Results";
 import Review from "./Pages/Review";
 import WriteReview from "./Pages/WriteReview";
 import ResultsList from "./Pages/ResultsList";

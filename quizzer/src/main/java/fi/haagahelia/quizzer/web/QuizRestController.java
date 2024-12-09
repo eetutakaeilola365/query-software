@@ -192,6 +192,7 @@ public class QuizRestController {
                 List<Review> reviews = reviewRepository.findByQuiz(quiz);
                 return new ResponseEntity<>(reviews, HttpStatus.OK); // 200 OK
         }
+
         @PostMapping("/reviews")
         public ResponseEntity<?> postReviews(@RequestBody ReviewDto review) {
                 Quiz quiz = quizRepository.findById(review.getQuizId()).orElseThrow(
@@ -200,18 +201,16 @@ public class QuizRestController {
 
                 if (!quiz.getPublished()) {
                         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Quiz not published");
-                    }
-                    
-                    else{
+                }
+
+                else {
                         Review newReview = new Review();
                         newReview.setQuiz(quiz);
                         reviewRepository.save(newReview);
-        
-                        return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
-                    }
 
-        
+                        return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
+                }
+
         }
 
-        
 }

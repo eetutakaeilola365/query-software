@@ -80,7 +80,7 @@ function Quiz() {
       <p>Date: {quiz.date}</p>
       <Stack>
         {quiz.questions.map((question) => (
-          <div key={question.questionid} class="question">
+          <div key={question.questionid} className="question">
             <Item>
               <h2>{question.name}</h2>
               <p>Difficulty: {question.difficulty}</p>
