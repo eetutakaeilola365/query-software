@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Card, CardContent, Typography} from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 import { getQuiz } from '../../quizApi'; // Assuming this is your API for fetching quiz data
 
 function Review() {
@@ -76,6 +76,7 @@ function Review() {
                                 </Typography>
                                 <Typography variant="body1">{review.reviewtext}</Typography>
                                 <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
+                                    Written on: {review.date}
                                     Written on: {review.date}
                                 </Typography>
                             </CardContent>
