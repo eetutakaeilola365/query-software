@@ -14,6 +14,10 @@ School project. In this project the end goal is to make a software where the use
    
    __Deployment link:__
    https://pepperpot-quizzer.onrender.com/quizlist
+   
+   __License link:__
+   https://github.com/eetutakaeilola365/query-software?tab=MIT-1-ov-file
+   
 
 
 ## Developer guide
