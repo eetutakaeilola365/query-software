@@ -15,7 +15,6 @@ public class Submission {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long submissionid;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "answerid")
     private Answer answer;
