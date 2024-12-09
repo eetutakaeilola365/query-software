@@ -133,6 +133,7 @@ The project is structured into three main components:
       - `Nickname` (string) - reviewer's nicname
       - `Rating` (integer) - A score (1-5) for the quiz where 1 is bad and 5 is great
       - `Reviewtext` - A short text to give written feedback
+      - `Date` (localdate) - The date the review was written
 
     **Relationships:**
       - Many to one (Review → Quiz)
