@@ -50,7 +50,7 @@ function QuizList() {
         >
           See Reviews
         </span>
-      ),}
+      ),},
     //Tähän results page navigaatio
     //Tähän Review page navigaatio
     {
