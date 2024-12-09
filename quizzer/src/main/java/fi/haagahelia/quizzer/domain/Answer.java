@@ -49,6 +49,10 @@ public class Answer {
         this.correct = correct;
     }
 
+    public boolean isCorrect() {
+        return correct;
+    }
+
     public String getChoice() {
         return choice;
     }
