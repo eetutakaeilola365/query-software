@@ -1,38 +1,47 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getQuiz, getReviewsByQuizId } from "../../quizApi";
+import { postSubmission, getReviewsByQuizId } from "../../quizApi";
 
 function WriteReview() {
-    const today = new Date();
-    const formattedDate = today.toLocaleDateString();
-    const { id } = useParams(); // Get quiz ID from URL params
-    const [quiz, setQuiz] = useState(null); // State to hold quiz details
-    const [review, setReviewsByQuizId] = useState({
-        username: "",
-        rating: "2",
-        text: "",
-    });
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString();
+  const { id } = useParams(); // Get quiz ID from URL params
+  //const [quiz, setQuiz] = useState(null); // State to hold quiz details
+  const [review, setReview] = useState({
+    username: "",
+    rating: "2",
+    text: "",
+  });
+  const [error, setError] = useState(""); // State for error messages
 
-    useEffect(() => {
-        async function fetchQuizData() {
-        try {
-            const quizData = await getQuiz(id);
-            setQuiz(quizData);
-        } catch (error) {
-            console.error("Error fetching quiz data:", error);
-        }
-        }
+  // Fetch quiz details when the component mounts
+  useEffect(() => {
+    async function fetchReviewData() {
+      try {
+        const reviewData = await getReviewsByQuizId(id);
+        setReview(reviewData);
+      } catch (error) {
+        console.error("Error fetching quiz data:", error);
+      }
+    }
 
-    fetchQuizData();
+    fetchReviewData();
   }, [id]);
-  const handleFetch = () => {
-    getReviewsByQuizId(id) // Pass the ID to the API function
-      .then(data => setReviewsByQuizId(data))
-    getQuiz(id)
-    .then(data => setQuiz(data))
-    .catch(error => console.error('Error fetching reviews:', error));
-    
+  const handleSubmit = () => {
+    if (getReviewsByQuizId) {
+      postSubmission(getReviewsByQuizId)
+        .then(response => {
+          console.log("Submission successful:", response);
+        })
+        .catch(err => {
+          console.error("Submission error:", err);
+          setError(err.message);
+        });
+    } else {
+      setError("Please select an answer before submitting.");
+    }
   };
+
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,19 +51,16 @@ function WriteReview() {
     }));
   };
 
-  const handleSubmit = () => {
-    // Logic to submit review goes here
-    console.log("Submitted Review:", review);
-  };
+  // Handle form submission
 
-  if (!quiz) {
+  if (!review) {
     return <p>Loading...</p>;
   }
 
   return (
     <main>
       <header>
-        <h1>{quiz.name}</h1>
+        <h1>{review.name}</h1>
       </header>
       <div>
         <label>
@@ -91,6 +97,7 @@ function WriteReview() {
             />
           </label>
         </p>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <div>
           <p>{formattedDate}</p>
           <button onClick={handleSubmit}>Submit</button>

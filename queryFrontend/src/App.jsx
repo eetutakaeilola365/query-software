@@ -6,7 +6,6 @@ import Container from "@mui/material/Container";
 import AppBar from "@mui/material/AppBar"
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css'; // Global styles
-
 import QuizList from "./Pages/Quizlist"; // Main quizzes list
 import Quiz from "./Pages/Quiz";
 import CategoryQuizzes from "./Pages/CategoryQuizzes";
