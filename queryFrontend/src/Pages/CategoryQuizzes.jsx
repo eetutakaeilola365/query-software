@@ -8,6 +8,7 @@ import { getPublishedQuizzesByCategory, getCategory } from "../../quizApi";
 
 function CategoryQuizzes() {
     const navigate = useNavigate();
+
     const handleQuizClick = (quizId) => {
         navigate(`/quiz/${quizId}`); 
     };

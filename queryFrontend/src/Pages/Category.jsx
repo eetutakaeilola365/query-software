@@ -7,7 +7,6 @@ import { getCategories } from '../../quizApi';
 
 function Category() {
   const navigate = useNavigate();
-
   const handleCategoryClick = (categoryId) => {
     navigate(`/categories/${categoryId}/quizzes`); // Navigate to the quizzes for that category
   };
@@ -25,7 +24,6 @@ function Category() {
     ),},
     { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
     flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
-
   ])
 
   useEffect(() => {

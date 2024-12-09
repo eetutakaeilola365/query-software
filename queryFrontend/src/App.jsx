@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -12,6 +12,7 @@ import Quiz from "./Pages/Quiz";
 import CategoryQuizzes from "./Pages/CategoryQuizzes";
 import Category from "./Pages/Category"; // Categories page
 import Results from "./Pages/Results";
+import Review from "./Pages/Review";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/categories/:id" element={<Category />} />
           <Route path="/categories" element={<Category />} />
           <Route path="/categories/:id/quizzes" element={<CategoryQuizzes />} />
+          <Route path="/review/:id/quizzes" element={<Review />}/>
         </Routes>
         </Container>
     </Router>
