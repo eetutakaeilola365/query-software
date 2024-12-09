@@ -7,9 +7,8 @@ import { getCategories } from '../../quizApi';
 
 function Category() {
   const navigate = useNavigate();
-
   const handleCategoryClick = (categoryId) => {
-    navigate(`/category/${categoryId}/quizzes`); // Navigate to the quizzes for that category
+    navigate(`/categories/${categoryId}/quizzes`); // Navigate to the quizzes for that category
   };
 
   const [Categories, setCategories] = useState([]);
@@ -25,7 +24,6 @@ function Category() {
     ),},
     { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
     flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
-
   ])
 
   useEffect(() => {
@@ -42,7 +40,7 @@ function Category() {
     <div>
       <main>
         <h2>Categories</h2>
-        <div className="ag-theme-material" style={{height: 500, width: 1000, margin: "0 auto"}}>
+        <div className="ag-theme-material" style={{height: 500, maxWidth: 1280, margin: "0 auto"}}>
           <AgGridReact
             rowData={Categories}
             columnDefs={colDefs}
