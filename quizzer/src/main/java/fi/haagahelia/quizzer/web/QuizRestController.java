@@ -40,6 +40,7 @@ import fi.haagahelia.quizzer.domain.ReviewRepository;
 import fi.haagahelia.quizzer.domain.ReviewDto;
 import fi.haagahelia.quizzer.domain.SubmissionService;
 
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
@@ -222,6 +223,7 @@ public class QuizRestController {
         })
 
         @GetMapping("/seeresults/{quizId}")
+        @ResponseBody
         public Map<String, Object> getQuizResults(@PathVariable Long quizId) {
 
                 Quiz quiz = quizRepository.findById(quizId)

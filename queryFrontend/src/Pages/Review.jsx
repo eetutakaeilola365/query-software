@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, Typography } from '@mui/material';
-import { getQuiz } from '../../quizApi'; // Assuming this is your API for fetching quiz data
+import { getQuiz, getReviewsByQuizId } from '../../quizApi'; // Assuming this is your API for fetching quiz data
 
 function Review() {
     const { id } = useParams(); // Correct destructuring of the 'id' from URL
@@ -35,9 +35,19 @@ function Review() {
 
         setReviews(mockReviews);
 
+        // getReviewsByQuizId(id)
+        // .then(data => setReviews(data))
+        // .catch(error => console.error('Error fetching reviews:', error));
+
         getQuiz(id)
             .then(data => setQuiz(data))
             .catch(error => console.error('Error fetching quiz:', error));
+    };
+    //Function to calculate the avarage rating of a quiz
+    const calculateAverageRating = () => {
+        if (reviews.length === 0) return 0; 
+        const sum = reviews.reduce((total, review) => total + review.rating, 0);
+        return (sum / reviews.length).toFixed(1); 
     };
 
     return (
@@ -46,9 +56,23 @@ function Review() {
             <Typography variant="h4" gutterBottom>
                 Reviews of Quiz: {quiz ? quiz.name : 'Loading...'}
             </Typography>
+            <Typography variant="h6" style={{ marginTop: '20px' }}>
+
+            {reviews.length > 0 ? (
+                <Typography variant="body2" style={{ marginTop: '20px' }}>
+                    {calculateAverageRating()}/5 rating average based on {reviews.length} reviews
+                </Typography>
+            ) : (
+                <Typography variant="body2" style={{ marginTop: '20px' }}>
+                    No reviews yet.
+                </Typography>
+            )}
+            </Typography>
+
 
             <Link to="/writereview/:id/reviews">Write your review</Link>
 
+            
             <div
                 style={{
                     maxHeight: '500px',
@@ -76,7 +100,6 @@ function Review() {
                                 </Typography>
                                 <Typography variant="body1">{review.reviewtext}</Typography>
                                 <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
-                                    Written on: {review.date}
                                     Written on: {review.date}
                                 </Typography>
                             </CardContent>

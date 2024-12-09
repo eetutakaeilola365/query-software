@@ -12,6 +12,12 @@ function CategoryQuizzes() {
     const handleQuizClick = (quizId) => {
         navigate(`/quiz/${quizId}`); 
     };
+    const handleSeeReviewsClick = (quizId) => {
+        navigate(`/quiz/${quizId}/reviews`); // Navigate to the reviews page for the quiz
+    };
+    const handleResultsClick = (quizId) => {
+        navigate(`/results/${quizId}`); // Navigate to the results page
+      };
 
     const { id } = useParams(); //category id url: stä
 
@@ -35,6 +41,16 @@ function CategoryQuizzes() {
             flex: 1 // venyttää fieldiä tarpeeks et koko description mahtuu siihen
         },
         { field: "date", headerName: "Added on " },
+        {
+            headerName: "See Reviews",
+            cellRenderer: params => (
+              <span
+                style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
+                onClick={() => handleSeeReviewsClick(params.data.quizid)}
+              >
+                See Reviews
+              </span>
+            ),},
         {
             headerName: "Results",
             cellRenderer: params => (
