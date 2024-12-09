@@ -39,6 +39,11 @@ function Review() {
             .then(data => setQuiz(data))
             .catch(error => console.error('Error fetching quiz:', error));
     };
+    const calculateAverageRating = () => {
+        if (reviews.length === 0) return 0; 
+        const sum = reviews.reduce((total, review) => total + review.rating, 0);
+        return (sum / reviews.length).toFixed(1); 
+    };
 
     return (
         <div style={{ padding: '20px' }}>
@@ -46,9 +51,23 @@ function Review() {
             <Typography variant="h4" gutterBottom>
                 Reviews of Quiz: {quiz ? quiz.name : 'Loading...'}
             </Typography>
+            <Typography variant="h6" style={{ marginTop: '20px' }}>
+
+            {reviews.length > 0 ? (
+                <Typography variant="body2" style={{ marginTop: '20px' }}>
+                    {calculateAverageRating()}/5 rating average based on {reviews.length} reviews
+                </Typography>
+            ) : (
+                <Typography variant="body2" style={{ marginTop: '20px' }}>
+                    No reviews yet.
+                </Typography>
+            )}
+            </Typography>
+
 
             <Link to="/writereview/:id/reviews">Write your review</Link>
 
+            
             <div
                 style={{
                     maxHeight: '500px',
