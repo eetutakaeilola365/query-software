@@ -1,12 +1,13 @@
-
-function Reviews() {
+import{Link} from 'react-router-dom'
+function Review() {
 
 return (
     <div>
-        <h1>Reviews of</h1>
+        <h2>Reviews of</h2>
+        <Link color="inherit" component={Link} to="/writereview">Write your review</Link>
     </div>
     
     )
 }
 
-export default Reviews;
+export default Review;
