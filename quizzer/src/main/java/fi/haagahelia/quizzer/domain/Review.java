@@ -1,5 +1,9 @@
 package fi.haagahelia.quizzer.domain;
 
+import java.time.LocalDate;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -24,6 +28,9 @@ public class Review {
     private String nickname;
     private Integer rating;
     private String reviewtext;
+    @CreationTimestamp
+    private LocalDate date;
+
 
     public Review () {}
 
@@ -58,14 +65,24 @@ public class Review {
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     }
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {
         return "Review [reviewid=" + reviewid + ", quiz=" + quiz + ", nickname=" + nickname + ", rating=" + rating
-                + ", reviewtext=" + reviewtext + "]";
+                + ", reviewtext=" + reviewtext + ", date=" + date + "]";
     }
 
     
+    
+    
+
 
     
 

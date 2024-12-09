@@ -106,9 +106,6 @@ public class QuizRestController {
                         return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 Not Found
                 }
                 List<Question> questions = questionRepository.findByQuiz(quiz);
-                if (questions.isEmpty()) {
-                        return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404 No Content
-                }
                 return new ResponseEntity<>(questions, HttpStatus.OK); // 200 OK
         }
 
