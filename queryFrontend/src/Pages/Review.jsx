@@ -47,7 +47,7 @@ function Review() {
                 Reviews of Quiz: {quiz ? quiz.name : 'Loading...'}
             </Typography>
 
-            <Link to="/writereview">Write your review</Link>
+            <Link to="/writereview/:id/reviews">Write your review</Link>
 
             <div
                 style={{
@@ -76,6 +76,7 @@ function Review() {
                                 </Typography>
                                 <Typography variant="body1">{review.reviewtext}</Typography>
                                 <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
+                                    Written on: {review.date}
                                     Written on: {review.date}
                                 </Typography>
                             </CardContent>
