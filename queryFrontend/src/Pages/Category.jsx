@@ -23,7 +23,7 @@ function Category() {
       </span>
     ),},
     { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
-    flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
+    flex: 1},
   ])
 
   useEffect(() => {
