@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Card, CardContent, Typography, Button } from '@mui/material';
+import { Card, CardContent, Typography} from '@mui/material';
 import { getQuiz } from '../../quizApi'; // Assuming this is your API for fetching quiz data
 
 function Review() {
@@ -47,7 +47,7 @@ function Review() {
                 Reviews of Quiz: {quiz ? quiz.name : 'Loading...'}
             </Typography>
 
-            <Link to="/writereview">Write your review</Link>
+            <Link to="/writereview/:id/reviews">Write your review</Link>
 
             <div
                 style={{
@@ -76,7 +76,7 @@ function Review() {
                                 </Typography>
                                 <Typography variant="body1">{review.reviewtext}</Typography>
                                 <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
-                                    Written on: {new Date(review.date).toLocaleDateString()}
+                                    Written on: {review.date}
                                 </Typography>
                             </CardContent>
                         </Card>
