@@ -21,6 +21,9 @@ function QuizList() {
     navigate(`/quiz/${quizId}/reviews`); // Navigate to the reviews page for the quiz
   };
   
+  const handleResultsClick = (quizId) => {
+    navigate(`/results/${quizId}`); // Navigate to the results page
+  };
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
     { 
@@ -50,6 +53,22 @@ function QuizList() {
       ),}
     //Tähän results page navigaatio
     //Tähän Review page navigaatio
+    {
+      headerName: "Results",
+      cellRenderer: params => (
+        <span
+          style={{
+            color: "#1976d2",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+          onClick={() => handleResultsClick(params.data.quizid)} // Lisää navigointi tulossivulle
+        >
+          See Results
+        </span>
+      ),
+      width: 120,
+    },
   ])
 
 

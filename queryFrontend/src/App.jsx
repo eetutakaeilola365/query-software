@@ -14,6 +14,7 @@ import Category from "./Pages/Category"; // Categories page
 import Results from "./Pages/Results";
 import Review from "./Pages/Review";
 import WriteReview from "./Pages/WriteReview";
+import ResultsList from "./Pages/ResultsList";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
         </AppBar>
         <Container >
         <Routes>
-          <Route path="/results" element={<Results />} />
+          <Route path="/results/:quizId" element={<ResultsList />} />
           <Route path="/" element={<QuizList />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/categories/:id" element={<Category />} />
