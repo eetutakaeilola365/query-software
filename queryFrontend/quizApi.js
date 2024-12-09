@@ -99,4 +99,38 @@ export function postSubmission(newSubmission) {
     
             return response.json();
         });
+    }
+    export function getReviewsByQuizId(id){
+        return fetch(import.meta.env.VITE_API_URL+"/quizzes/"+id+"/reviews")
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error in fetch" + response.statusText);
+    
+            return response.json();
+        })
+    };
+
+
+export function getResultsByQuizID(id) {
+    return fetch(import.meta.env.VITE_API_URL + "/quizzes/" + id + "/submissions")
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error in fetching submissions: " + response.statusText);
+
+            return response.json();
+        });
+}
+
+export function getQuizSubmissionsById(quizId) {
+    return fetch(`${import.meta.env.VITE_BACKEND_URL}/api/seeresults/${quizId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error in fetch: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error("Error fetching quiz submissions:", error);
+            throw error;
+        });
 }
