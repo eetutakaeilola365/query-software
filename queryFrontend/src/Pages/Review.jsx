@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, Typography } from '@mui/material';
-import { getQuiz } from '../../quizApi'; // Assuming this is your API for fetching quiz data
+import { getQuiz, getReviewsByQuizId } from '../../quizApi'; // Assuming this is your API for fetching quiz data
 
 function Review() {
     const { id } = useParams(); // Correct destructuring of the 'id' from URL
@@ -35,10 +35,15 @@ function Review() {
 
         setReviews(mockReviews);
 
+        // getReviewsByQuizId(id)
+        // .then(data => setReviews(data))
+        // .catch(error => console.error('Error fetching reviews:', error));
+
         getQuiz(id)
             .then(data => setQuiz(data))
             .catch(error => console.error('Error fetching quiz:', error));
     };
+    //Function to calculate the avarage rating of a quiz
     const calculateAverageRating = () => {
         if (reviews.length === 0) return 0; 
         const sum = reviews.reduce((total, review) => total + review.rating, 0);
