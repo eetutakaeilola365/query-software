@@ -1,110 +1,86 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { postReview, getReviewsByQuizId } from "../../quizApi";
-
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, Button, Checkbox, FormControlLabel, Snackbar, TextField, Typography } from '@mui/material';
+import { postReview } from '../../quizApi';
+import { getQuiz } from '../../quizApi';
 function WriteReview() {
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString();
-  const { id } = useParams(); // Get quiz ID from URL params
-  //const [quiz, setQuiz] = useState(null); // State to hold quiz details
-  const [review, setReview] = useState([
-    {field: "nickname"},
-    {field: "rating"},
-    {field: "reviewtext"},
-]);
-  const [error, setError] = useState(""); // State for error messages
+  const { quizId } = useParams();
+  const [nickname, setNickname] = useState('');
+  const [rating, setRating] = useState(0);
+  const [reviewtext, setReviewtext] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [quiz, setQuiz] = useState('');
+  const [error, setError] = useState(null);
 
-  // Fetch quiz details when the component mounts
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
+
   useEffect(() => {
-    async function fetchReviewData() {
-      try {
-        const reviewData = await getReviewsByQuizId(id);
-        setReview(reviewData);
-      } catch (error) {
-        console.error("Error fetching quiz data:", error);
-      }
-    }
+    getQuiz(quizId)
+      .then(data => setQuiz(data))
+      .catch(err => setError(err.message));
+  }, [quizId]);
 
-    fetchReviewData();
-  }, [id]);
-  const handleSubmit = async() => {
-    if (review.nickname && review.rating && review.reviewtext) {
-        try {
-            const response = await postReview(id, review); // Assuming postReview accepts id and review object
-            console.log("Submission successful:", response);
-            setError("");
-            
-          } catch (err) {
-            console.error("Submission error:", err);
-            setError("Failed to submit the review. Please try again.");
-          } 
-    } else {
-      setError("Please select an answer before submitting.");
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const review = { quizId, nickname, rating, reviewtext };
+    postReview(review)
+      .then(response => {
+        setSnackbarOpen(true);
+        console.log("Submission successful:", response);
+        })
+      .catch((error) => {
+        console.error('Error submitting review:', error);
+        alert('Failed to submit review.');
+      });
   };
 
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setReview((prevReview) => ({
-      ...prevReview,
-      [name]: value,
-    }));
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
-
-  // Handle form submission
-
-  if (!review) {
-    return <p>Loading...</p>;
-  }
 
   return (
-    <main>
-      <header>
-        <h1>{review.name}</h1>
-      </header>
-      <div>
-        <label>
-          Nickname:{" "}
-          <input
-            name="nickname"
-            value={review.username}
-            onChange={handleInputChange}
+    <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: 'auto' }}>
+      <Typography variant="h4" component="h1">Write a Review for "{quiz.name}"</Typography>
+      <TextField
+        label="Nickname"
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
+        required
+      />
+      <Typography component="legend">Rating</Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        {[
+          { value: 1, label: '1 - Useless' },
+          { value: 2, label: '2 - Poor' },
+          { value: 3, label: '3 - Ok' },
+          { value: 4, label: '4 - Good' },
+          { value: 5, label: '5 - Excellent' }
+        ].map((item) => (
+          <FormControlLabel
+            key={item.value}
+            control={<Checkbox checked={rating === item.value} onChange={() => handleRatingChange(item.value)} />}
+            label={item.label}
           />
-        </label>
-        <p>
-          <p>Rating:</p>
-          {[1, 2, 3, 4, 5].map((value) => (
-            <label key={value}>
-              <input
-                type="radio"
-                name="rating"
-                value={value}
-                checked={review.rating === String(value)}
-                onChange={handleInputChange}
-              />
-              {value}
-            </label>
-          ))}
-        </p>
-        <p>
-          <label>
-            Write your review:{" "}
-            <input
-              type="text"
-              name="reviewtext"
-              value={review.text}
-              onChange={handleInputChange}
-            />
-          </label>
-        </p>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <div>
-          <p>{formattedDate}</p>
-          <button onClick={handleSubmit}>Submit</button>
-        </div>
-      </div>
-    </main>
+        ))}
+      </Box>
+      <TextField
+        label="Review"
+        value={reviewtext}
+        onChange={(e) => setReviewtext(e.target.value)}
+        multiline
+        rows={4}
+        required
+      />
+      <Button type="submit" variant="contained" color="primary">Submit</Button>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="Thank you for submitting a review!"
+      />
+    </Box>
   );
 }
 

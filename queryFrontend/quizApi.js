@@ -85,21 +85,22 @@ export function postSubmission(newSubmission) {
     });
 }
 
-    export function postReview(newReview) {
+    export function postReview(review) {
         return fetch(import.meta.env.VITE_API_URL+"/reviews", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({quizId: newReview})
+            body: JSON.stringify(review)
         })
         .then(response => {
             if (!response.ok)
-                throw new Error("Error in submitting answer: " + response.statusText+JSON.stringify({quizId: newReview}));
+                throw new Error("Error in submitting review: " + response.statusText+JSON.stringify(review));
     
             return response.json();
         });
     }
+
     export function getReviewsByQuizId(id){
         return fetch(import.meta.env.VITE_API_URL+"/quizzes/"+id+"/reviews")
         .then(response => {

@@ -208,6 +208,9 @@ public class QuizRestController {
                 else {
                         Review newReview = new Review();
                         newReview.setQuiz(quiz);
+                        newReview.setRating(review.getRating());
+                        newReview.setReviewtext(review.getReviewtext());
+                        newReview.setNickname(review.getNickname());
                         reviewRepository.save(newReview);
 
                         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
