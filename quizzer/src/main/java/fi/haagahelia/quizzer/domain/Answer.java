@@ -29,7 +29,7 @@ public class Answer {
     @JoinColumn(name = "questionid")
     private Question question;
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "answer") // , orphanRemoval = true
     private List<Submission> submissions;
 
