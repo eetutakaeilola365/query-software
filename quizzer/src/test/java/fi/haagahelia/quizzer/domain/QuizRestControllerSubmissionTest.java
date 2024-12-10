@@ -76,13 +76,13 @@ public class QuizRestControllerSubmissionTest {
 
     @Test
     public void createAnswerDoesNotSaveAnswerWithoutAnswerOption() throws Exception {
-//KESKEN
+        // KESKEN
         this.mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"answerOptionId\": null }"))
                 .andExpect(status().isBadRequest());
 
-                assertEquals(0, submissionRepo.count());
+        assertEquals(0, submissionRepo.count());
     }
 
-    
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Card, CardContent, Typography } from '@mui/material';
-import { getQuiz, getReviewsByQuizId } from '../../quizApi';
+import { Card, CardContent, Typography, Button } from '@mui/material';
+import { getQuiz, getReviewsByQuizId, deleteReview } from '../../quizApi';
 
 function Review() {
     const { id } = useParams();
@@ -21,6 +21,24 @@ function Review() {
             .then(data => setReviews(data))
             .catch(error => console.error('Error fetching reviews:', error));
     };
+
+    const handleDelete = (reviewId) => {
+
+        const confirmed = window.confirm("Are you sure you want to delete this review?");
+
+        if (confirmed) {
+            deleteReview(reviewId)
+                .then(() => {
+                    setReviews(reviews.filter(review => review.reviewid !== reviewId));
+                })
+                .catch(error => {
+                    console.error('Error deleting review:', error);
+                });
+        } else {
+            console.log('Delete action was cancelled');
+        }
+    };
+
 
     const calculateAverageRating = () => {
         if (reviews.length === 0) return 0;
@@ -60,6 +78,7 @@ function Review() {
                                 padding: '20px',
                                 marginBottom: '20px',
                                 height: 'auto',
+                                position: 'relative',
                             }}
                         >
                             <CardContent>
@@ -74,6 +93,15 @@ function Review() {
                                     Written on: {review.date || 'N/A'}
                                 </Typography>
                             </CardContent>
+                            <div style={{ position: 'absolute', top: '10px', right: '10px', }}>
+                                <Button
+                                    variant="outlined"
+                                    color="default"
+                                    onClick={() => handleDelete(review.reviewid)}
+                                >
+                                    Delete
+                                </Button>
+                            </div>
                         </Card>
                     ))
                 ) : (

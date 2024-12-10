@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import fi.haagahelia.quizzer.domain.ReviewRepository;
 import fi.haagahelia.quizzer.domain.ReviewDto;
 import fi.haagahelia.quizzer.domain.SubmissionService;
-
 
 @RestController
 @RequestMapping("/api")
@@ -214,9 +214,8 @@ public class QuizRestController {
                         reviewRepository.save(newReview);
 
                         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
-                    }
+                }
 
-        
         }
 
         @Operation(summary = "Get results for a quiz", description = "Returns total answers and total right answers for a quiz")
@@ -241,9 +240,11 @@ public class QuizRestController {
                                         Map<String, Object> questionMap = Map.of(
                                                         "questionText", question.getName(),
                                                         "difficulty", question.getDifficulty(),
-                                                        "totalAnswers", submissionRepository.findByAnswerQuestion(question).size(),
-                                                        "totalRightAnswers", submissionService.countCorrectAnswers(submissionRepository.findByAnswerQuestion(question))
-                                                        );
+                                                        "totalAnswers",
+                                                        submissionRepository.findByAnswerQuestion(question).size(),
+                                                        "totalRightAnswers",
+                                                        submissionService.countCorrectAnswers(submissionRepository
+                                                                        .findByAnswerQuestion(question)));
                                         return questionMap;
                                 })
                                 .toList();
@@ -252,9 +253,16 @@ public class QuizRestController {
                                 "quizName", quiz.getName(),
                                 "questionCount", questions.size(),
                                 "submissionsCount", submissions.size(),
-                                "questions", questionDetails
-                                );
+                                "questions", questionDetails);
+        }
 
-        
-}
+        @DeleteMapping("/reviews/{Id}")
+        public ResponseEntity<Void> deleteReview(@PathVariable("Id") Long reviewId) {
+                Review review = reviewRepository.findById(reviewId)
+                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Review with id " + reviewId + " does not exist"));
+
+                reviewRepository.delete(review);
+                return ResponseEntity.noContent().build();
+        }
 };
