@@ -9,6 +9,15 @@ public class ReviewDto {
 
     public ReviewDto (){}
 
+    
+    public ReviewDto(Long quizId, String nickname, Integer rating, String reviewtext) {
+        this.quizId = quizId;
+        this.nickname = nickname;
+        this.rating = rating;
+        this.reviewtext = reviewtext;
+    }
+
+
     public Long getQuizId() {
         return quizId;
     }
