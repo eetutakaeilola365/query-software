@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -224,6 +225,20 @@ public class QuizRestController {
                         return ResponseEntity.status(HttpStatus.CREATED).body(newReview);
                 }
 
+        }
+
+        @PutMapping("/reviews/{id}")
+        public ResponseEntity<Review> updateReview(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
+                Review review = reviewRepository.findById(id).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Review with id " + id + " does not exist"));
+
+                review.setNickname(reviewDto.getNickname());
+                review.setRating(reviewDto.getRating());
+                review.setReviewtext(reviewDto.getReviewtext());
+                reviewRepository.save(review);
+
+                return ResponseEntity.ok(review);
         }
 
         @Operation(summary = "Get results for a quiz", description = "Returns total answers and total right answers for a quiz")
