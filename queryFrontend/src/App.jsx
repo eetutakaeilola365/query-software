@@ -14,6 +14,7 @@ import Category from "./Pages/Category"; // Categories page
 import Review from "./Pages/Review";
 import WriteReview from "./Pages/WriteReview";
 import ResultsList from "./Pages/ResultsList";
+import EditReview from './Pages/EditReview';
 
 function App() {
   return (
@@ -30,14 +31,15 @@ function App() {
         </AppBar>
         <Container >
         <Routes>
-          <Route path="/results/:quizId" element={<ResultsList />} />
+          <Route path="/quiz/:quizId/results" element={<ResultsList />} />
           <Route path="/" element={<QuizList />} />
           <Route path="/quiz/:id" element={<Quiz />} />
           <Route path="/categories/:id" element={<Category />} />
           <Route path="/categories" element={<Category />} />
           <Route path="/categories/:id/quizzes" element={<CategoryQuizzes />} />
           <Route path="/quiz/:id/reviews" element={<Review />}/>
-          <Route path="/writereview/:quizId/reviews" element={<WriteReview />} />
+          <Route path="/quiz/:quizId/reviews/writereview" element={<WriteReview/>}/>
+          <Route path="/quiz/:id/reviews/:reviewid" element={<EditReview/>}/>
         </Routes>
         </Container>
     </Router>

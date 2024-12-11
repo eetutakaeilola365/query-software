@@ -18,7 +18,7 @@ function QuizList() {
   };
   
   const handleResultsClick = (quizId) => {
-    navigate(`/results/${quizId}`); // Navigate to the results page
+    navigate(`/quiz/${quizId}/results`); // Navigate to the results page
   };
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
@@ -35,7 +35,7 @@ function QuizList() {
     },
     { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
     flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
-    { field: "category.name" },
+    { field: "category.name", flex:1 },
     { field: "date" },
     {
       headerName: "See Reviews",
@@ -47,8 +47,6 @@ function QuizList() {
           See Reviews
         </span>
       ),},
-    //Tähän results page navigaatio
-    //Tähän Review page navigaatio
     {
       headerName: "Results",
       cellRenderer: params => (
@@ -82,6 +80,7 @@ function QuizList() {
     <div>
       <main>
         <h2>Quizzes</h2>
+        <p>Take a quiz by clicking its name!</p>
         <div className="ag-theme-material" style={{ height: 500, maxWidth: 1280, margin: "0 auto" }}>
           <AgGridReact
             rowData={quizzes}

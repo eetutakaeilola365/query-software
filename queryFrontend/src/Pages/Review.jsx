@@ -60,7 +60,7 @@ function Review() {
                 )}
             </Typography>
 
-            <Link to={`/writereview/${id}/reviews`}>Write your review</Link>
+            <Link to={`/quiz/${id}/reviews/writereview`}>Write your review</Link>
 
             <div
                 style={{

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Button, Checkbox, FormControlLabel, Snackbar, TextField, Typography } from '@mui/material';
 import { postReview } from '../../quizApi';
 import { getQuiz } from '../../quizApi';
 function WriteReview() {
   const { quizId } = useParams();
+  const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [rating, setRating] = useState(0);
   const [reviewtext, setReviewtext] = useState('');
@@ -29,7 +30,8 @@ function WriteReview() {
       .then(response => {
         setSnackbarOpen(true);
         console.log("Submission successful:", response);
-        })
+        navigate(`/quiz/${quizId}/reviews`);
+      })
       .catch((error) => {
         console.error('Error submitting review:', error);
         alert('Failed to submit review.');
