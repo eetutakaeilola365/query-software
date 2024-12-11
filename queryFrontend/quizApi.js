@@ -109,7 +109,34 @@ export function getReviewsByQuizId(id) {
 
             return response.json();
         })
-};
+}
+
+export function getReview(reviewId) {
+    return fetch(import.meta.env.VITE_API_URL + "/reviews/" + reviewId)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error fetching review:"+response.statusText);
+            }
+            return response.json();
+        })    
+}
+
+export function updateReview(reviewId, review) {
+    return fetch(import.meta.env.VITE_API_URL+"/reviews/"+reviewId, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(review)
+    })
+    .then(response =>{
+        if (!response.ok) {
+            throw new Error(`Error updating review: ${response.statusText}`);
+        }
+        return response.json();
+    }) 
+}
+
 export function deleteReview(id) {
     return fetch(import.meta.env.VITE_API_URL + "/reviews/" + id, {
         method: "DELETE"

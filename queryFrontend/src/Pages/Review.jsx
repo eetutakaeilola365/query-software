@@ -96,10 +96,19 @@ function Review() {
                             <div style={{ position: 'absolute', top: '10px', right: '10px', }}>
                                 <Button
                                     variant="outlined"
-                                    color="default"
+                                    color="error"
                                     onClick={() => handleDelete(review.reviewid)}
                                 >
                                     Delete
+                                </Button>
+                                <Button
+                                    component={Link}
+                                    to={`/quiz/${id}/reviews/${review.reviewid}`}
+                                    variant="outlined"
+                                    color="success"
+                                    style={{ margin: '8px' }}
+                                >
+                                    Edit
                                 </Button>
                             </div>
                         </Card>
