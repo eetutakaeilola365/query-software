@@ -195,6 +195,14 @@ public class QuizRestController {
                 return new ResponseEntity<>(reviews, HttpStatus.OK); // 200 OK
         }
 
+        @GetMapping("/reviews/{id}")
+        public ResponseEntity<Review> getReviewById(@PathVariable("id") Long reviewId) {
+                Review review = reviewRepository.findById(reviewId).orElseThrow(
+                                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                                "Review with id " + reviewId + " does not exist"));
+                return new ResponseEntity<>(review, HttpStatus.OK); // 200 OK
+        }
+
         @PostMapping("/reviews")
         public ResponseEntity<?> postReviews(@RequestBody ReviewDto review) {
                 Quiz quiz = quizRepository.findById(review.getQuizId()).orElseThrow(
