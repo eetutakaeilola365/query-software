@@ -6,16 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class QuizRestControllerSubmissionTest {
     @Autowired
     QuizzRepository quizRepo;
@@ -60,17 +65,26 @@ public class QuizRestControllerSubmissionTest {
         submissiondto.setAnswerOptionId(answer.getAnswerid());
         submissiondto2.setAnswerOptionId(answer.getAnswerid());
         String requestBody = mapper.writeValueAsString(submissiondto2);
+        
+        
 
-        this.mockMvc.perform(post("/api/submissions")
+        MvcResult result = this.mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.submissionid").value(answer.getAnswerid()));
+                .andExpect(jsonPath("$.submissionid").exists())
+                .andReturn();
+
+
+
+        
+        String response = result.getResponse().getContentAsString();
+        String submissionId = JsonPath.parse(response).read("$.submissionid").toString();
 
         List<Submission> submissions = submissionRepo.findAll();
         assertEquals(1, submissions.size());
 
-        Submission savedSubmission = submissions.get(0);
+        Submission savedSubmission = submissionRepo.findById(Long.parseLong(submissionId)).orElseThrow();
         assertEquals(answer.getAnswerid(), savedSubmission.getAnswer().getAnswerid());
     }
 
