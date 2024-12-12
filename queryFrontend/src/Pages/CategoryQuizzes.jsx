@@ -16,7 +16,7 @@ function CategoryQuizzes() {
         navigate(`/quiz/${quizId}/reviews`); // Navigate to the reviews page for the quiz
     };
     const handleResultsClick = (quizId) => {
-        navigate(`/results/${quizId}`); // Navigate to the results page
+        navigate(`/quiz/${quizId}/results`); // Navigate to the results page
       };
 
     const { id } = useParams(); //category id url: stä
