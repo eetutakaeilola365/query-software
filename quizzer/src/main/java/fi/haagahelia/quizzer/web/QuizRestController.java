@@ -183,15 +183,14 @@ public class QuizRestController {
 
                 if (submission.getAnswerOptionId() == null) {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Answer option id cannot be null");
-                    }
-                
-                    
+                }
+
                 Answer answer = answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                                 "Answer with id " + submission + " does not exist"));
-                
+
                 Question question = answer.getQuestion();
-                Quiz quiz = question.getQuiz();                          
+                Quiz quiz = question.getQuiz();
                 if (quiz != null && !quiz.getPublished()) {
                         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Quiz is not published");
                 }
@@ -331,6 +330,6 @@ public class QuizRestController {
                                                 "Review with id " + reviewId + " does not exist"));
 
                 reviewRepository.delete(review);
-                return ResponseEntity.noContent().build(); //204 No Content
+                return ResponseEntity.noContent().build(); // 204 No Content
         }
 };

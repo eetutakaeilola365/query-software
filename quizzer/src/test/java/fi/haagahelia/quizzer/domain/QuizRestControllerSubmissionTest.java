@@ -15,9 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.time.LocalDate;
 import java.util.List;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -67,8 +65,6 @@ public class QuizRestControllerSubmissionTest {
         submissiondto.setAnswerOptionId(answer.getAnswerid());
         submissiondto2.setAnswerOptionId(answer.getAnswerid());
         String requestBody = mapper.writeValueAsString(submissiondto2);
-        
-        
 
         MvcResult result = this.mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -77,9 +73,6 @@ public class QuizRestControllerSubmissionTest {
                 .andExpect(jsonPath("$.submissionid").exists())
                 .andReturn();
 
-
-
-        
         String response = result.getResponse().getContentAsString();
         String submissionId = JsonPath.parse(response).read("$.submissionid").toString();
 
