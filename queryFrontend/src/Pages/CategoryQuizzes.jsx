@@ -13,61 +13,56 @@ function CategoryQuizzes() {
         navigate(`/quiz/${quizId}`); 
     };
     const handleSeeReviewsClick = (quizId) => {
-        navigate(`/quiz/${quizId}/reviews`); // Navigate to the reviews page for the quiz
+        navigate(`/quiz/${quizId}/reviews`);
     };
     const handleResultsClick = (quizId) => {
-        navigate(`/results/${quizId}`); // Navigate to the results page
+        navigate(`/quiz/${quizId}/results`);
       };
 
-    const { id } = useParams(); //category id url: stä
-
+    const { id } = useParams();
     const [category, setCategory] = useState(null);
     const [quizzes, setQuizzes] = useState([]);
     const [colDefs, setColDefs] = useState([
-
         {
-            field: "name",
-            cellRenderer: params => (
-                <span
-                    style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
-                    onClick={() => handleQuizClick(params.data.quizid)}
-                >
-                    {params.value}
-                </span>
-            )
+          field: "name",
+          cellRenderer: params => (
+            <span
+              style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
+              onClick={() => handleQuizClick(params.data.quizid)}
+            >
+              {params.value}
+            </span>
+          ),flex: 1
         },
+        { field: "description", cellStyle: { whiteSpace: 'nowrap' }, flex: 1}, 
+        { field: "date", flex: 1 },
         {
-            field: "description", headerName: "Description", cellStyle: { whiteSpace: 'nowrap' },
-            flex: 1 // venyttää fieldiä tarpeeks et koko description mahtuu siihen
+          headerName: "See Reviews",
+          cellRenderer: params => (
+            <span
+              style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
+              onClick={() => handleSeeReviewsClick(params.data.quizid)}
+            >
+              See Reviews
+            </span>
+          ), flex: 1},
+        {
+          headerName: "Results",
+          cellRenderer: params => (
+            <span
+              style={{
+                color: "#1976d2",
+                textDecoration: "underline",
+                cursor: "pointer",
+              }}
+              onClick={() => handleResultsClick(params.data.quizid)}
+            >
+              See Results
+            </span>
+          ),
+          width: 120, flex: 1
         },
-        { field: "date", headerName: "Added on " },
-        {
-            headerName: "See Reviews",
-            cellRenderer: params => (
-              <span
-                style={{ color: "#1976d2", textDecoration: "underline", cursor: "pointer" }}
-                onClick={() => handleSeeReviewsClick(params.data.quizid)}
-              >
-                See Reviews
-              </span>
-            ),},
-        {
-            headerName: "Results",
-            cellRenderer: params => (
-              <span
-                style={{
-                  color: "#1976d2",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleResultsClick(params.data.quizid)} // Lisää navigointi tulossivulle
-              >
-                See Results
-              </span>
-            ),
-            width: 120,
-          },
-    ]);
+      ]);
 
 
     useEffect(() => {
@@ -90,6 +85,7 @@ function CategoryQuizzes() {
             <main>
                 <h2 >{category.name}</h2>
                 <p>{category.description}</p>
+                <p>Click the name of the quiz to take it!</p>
                 <div className="ag-theme-material" style={{ height: 460, maxWidth: 1280, margin: "0 auto" }}>
                     <AgGridReact
                         rowData={quizzes}

@@ -169,10 +169,10 @@ public class QuizRestController {
                 return new ResponseEntity<>(submissions, HttpStatus.OK);
         }
 
-        @Operation(summary = "Get all submissions", description = "Returns a list of questions from a quiz with the provided id")
+        @Operation(summary = "Create a new submission", description = "Creates a new submission with the provided answer option id")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "201", description = "Submission created succesfully"),
-                        @ApiResponse(responseCode = "404", description = "Answer option does not exist")
+                        @ApiResponse(responseCode = "404", description = "Answer option with the provided id does not exist")
         })
 
         @PostMapping("/submissions")
@@ -187,6 +187,12 @@ public class QuizRestController {
                 return ResponseEntity.status(HttpStatus.CREATED).body(newSubmission);
         }
 
+        @Operation(summary = "Get reviews by quiz id", description = "Returns a list of reviews for a quiz with the provided quiz id")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Successful operation"),
+                        @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist")
+        })
+
         @GetMapping("/quizzes/{Id}/reviews")
         public ResponseEntity<List<Review>> getQuizReviewsById(@PathVariable("Id") Long quizId) {
                 Quiz quiz = quizRepository.findById(quizId).orElseThrow(
@@ -196,6 +202,12 @@ public class QuizRestController {
                 return new ResponseEntity<>(reviews, HttpStatus.OK); // 200 OK
         }
 
+        @Operation(summary = "Get review by id", description = "Returns a review with the provided id")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Successful operation"),
+                        @ApiResponse(responseCode = "404", description = "Review with the provided id does not exist")
+        })
+
         @GetMapping("/reviews/{id}")
         public ResponseEntity<Review> getReviewById(@PathVariable("id") Long reviewId) {
                 Review review = reviewRepository.findById(reviewId).orElseThrow(
@@ -203,6 +215,12 @@ public class QuizRestController {
                                                 "Review with id " + reviewId + " does not exist"));
                 return new ResponseEntity<>(review, HttpStatus.OK); // 200 OK
         }
+
+        @Operation(summary = "Get all reviews", description = "Returns all reviews")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Successful operation"),
+                        @ApiResponse(responseCode = "404", description = "Review with the provided id does not exist")
+        })
 
         @PostMapping("/reviews")
         public ResponseEntity<?> postReviews(@RequestBody ReviewDto review) {
@@ -227,6 +245,12 @@ public class QuizRestController {
 
         }
 
+        @Operation(summary = "Update review", description = "Updates review with the provided id")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "200", description = "Successful operation"),
+                        @ApiResponse(responseCode = "404", description = "Review with the provided id does not exist")
+        })
+
         @PutMapping("/reviews/{id}")
         public ResponseEntity<Review> updateReview(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
                 Review review = reviewRepository.findById(id).orElseThrow(
@@ -243,7 +267,6 @@ public class QuizRestController {
 
         @Operation(summary = "Get results for a quiz", description = "Returns total answers and total right answers for a quiz")
         @ApiResponses(value = {
-                        // The responseCode property defines the HTTP status code of the response
                         @ApiResponse(responseCode = "200", description = "Successful operation"),
                         @ApiResponse(responseCode = "404", description = "Quiz with the provided id not found")
         })
@@ -279,6 +302,12 @@ public class QuizRestController {
                                 "questions", questionDetails);
         }
 
+        @Operation(summary = "Update review", description = "Deletes review with the provided id")
+        @ApiResponses(value = {
+                        @ApiResponse(responseCode = "204", description = "Successful operation"),
+                        @ApiResponse(responseCode = "404", description = "Review with the provided id does not exist")
+        })
+
         @DeleteMapping("/reviews/{Id}")
         public ResponseEntity<Void> deleteReview(@PathVariable("Id") Long reviewId) {
                 Review review = reviewRepository.findById(reviewId)
@@ -286,6 +315,6 @@ public class QuizRestController {
                                                 "Review with id " + reviewId + " does not exist"));
 
                 reviewRepository.delete(review);
-                return ResponseEntity.noContent().build();
+                return ResponseEntity.noContent().build(); //204 No Content
         }
 };

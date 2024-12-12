@@ -49,7 +49,7 @@ function Review() {
     return (
         <div style={{ padding: '20px' }}>
             <Typography variant="h4" gutterBottom>
-                Reviews of "{quiz ? quiz.name : 'Loading...'}"
+                Reviews of the quiz: "{quiz ? quiz.name : 'Loading...'}"
             </Typography>
 
             <Typography variant="h6" style={{ marginTop: '20px' }}>
@@ -76,7 +76,7 @@ function Review() {
                             elevation={3}
                             style={{
                                 padding: '20px',
-                                marginBottom: '20px',
+                                margin: '10px',
                                 height: 'auto',
                                 position: 'relative',
                             }}
