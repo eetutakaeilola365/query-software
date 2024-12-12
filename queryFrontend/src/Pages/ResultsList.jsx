@@ -68,9 +68,7 @@ function ResultsList() {
 
   return (
     <>
-      <Typography variant="h4">
-        Results for the quiz: "{results.quizName || "Loading..."}"
-      </Typography>
+      <h2>Results for the quiz: "{results.quizName || "Loading..."}"</h2>
       <div>
         {results.totalAnswers || 0} answers to {results.questionCount || 0}{" "}
         questions

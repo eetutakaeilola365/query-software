@@ -47,7 +47,7 @@ function EditReview() {
 
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: 'auto' }}>
-            <Typography variant="h4" component="h1">Edit your Review</Typography>
+            <h2>Edit your Review</h2>
             <TextField
                 label="Nickname"
                 value={nickname}
