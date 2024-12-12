@@ -16,7 +16,7 @@ function CategoryQuizzes() {
         navigate(`/quiz/${quizId}/reviews`);
     };
     const handleResultsClick = (quizId) => {
-        navigate(`/results/${quizId}`); 
+        navigate(`/quiz/${quizId}/results`);
       };
 
     const { id } = useParams();
