@@ -36,6 +36,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import fi.haagahelia.quizzer.domain.Question;
 import org.springframework.web.bind.annotation.RequestParam;
 import fi.haagahelia.quizzer.domain.ReviewRepository;
@@ -172,14 +173,28 @@ public class QuizRestController {
         @Operation(summary = "Create a new submission", description = "Creates a new submission with the provided answer option id")
         @ApiResponses(value = {
                         @ApiResponse(responseCode = "201", description = "Submission created succesfully"),
-                        @ApiResponse(responseCode = "404", description = "Answer option with the provided id does not exist")
+                        @ApiResponse(responseCode = "404", description = "Answer option with the provided id does not exist"),
+                        @ApiResponse(responseCode = "400", description = "Answer option id cannot be null"),
+                        @ApiResponse(responseCode = "403", description = "Quiz is not published")
         })
 
         @PostMapping("/submissions")
-        public ResponseEntity<?> postSubmission(@RequestBody SubmissionDto submission) {
+        public ResponseEntity<?> postSubmission(@Valid @RequestBody SubmissionDto submission) {
+
+                if (submission.getAnswerOptionId() == null) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Answer option id cannot be null");
+                    }
+                
+                    
                 Answer answer = answerRepository.findById(submission.getAnswerOptionId()).orElseThrow(
                                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                                 "Answer with id " + submission + " does not exist"));
+                
+                Question question = answer.getQuestion();
+                Quiz quiz = question.getQuiz();                          
+                if (quiz != null && !quiz.getPublished()) {
+                        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Quiz is not published");
+                }
                 Submission newSubmission = new Submission();
                 newSubmission.setAnswer(answer);
                 submissionRepository.save(newSubmission);
@@ -216,10 +231,11 @@ public class QuizRestController {
                 return new ResponseEntity<>(review, HttpStatus.OK); // 200 OK
         }
 
-        @Operation(summary = "Get all reviews", description = "Returns all reviews")
+        @Operation(summary = "Create review", description = "Create a review for a quiz")
         @ApiResponses(value = {
-                        @ApiResponse(responseCode = "200", description = "Successful operation"),
-                        @ApiResponse(responseCode = "404", description = "Review with the provided id does not exist")
+                        @ApiResponse(responseCode = "201", description = "Review created successfully"),
+                        @ApiResponse(responseCode = "404", description = "Quiz with the provided id does not exist"),
+                        @ApiResponse(responseCode = "403", description = "Quiz not published")
         })
 
         @PostMapping("/reviews")

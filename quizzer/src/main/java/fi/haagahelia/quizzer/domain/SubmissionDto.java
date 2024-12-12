@@ -1,7 +1,10 @@
 package fi.haagahelia.quizzer.domain;
 
+import jakarta.validation.constraints.NotNull;
 
 public class SubmissionDto {
+
+    @NotNull(message = "Answer option ID cannot be null")
     private Long answerOptionId;
 
     public Long getAnswerOptionId() {

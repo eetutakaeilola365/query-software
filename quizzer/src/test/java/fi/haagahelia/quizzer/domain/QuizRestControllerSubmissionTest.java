@@ -58,14 +58,16 @@ public class QuizRestControllerSubmissionTest {
         answerRepo.save(answer);
 
         SubmissionDto submissiondto = new SubmissionDto();
+        SubmissionDto submissiondto2 = new SubmissionDto();
         submissiondto.setAnswerOptionId(answer.getAnswerid());
-        String requestBody = mapper.writeValueAsString(submissiondto);
+        submissiondto2.setAnswerOptionId(answer.getAnswerid());
+        String requestBody = mapper.writeValueAsString(submissiondto2);
 
         this.mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
-                .andExpect(status().isCreated()) // Assert that the response status is 201 Created
-                .andExpect(jsonPath("$.submissionid").value(answer.getAnswerid())); // Assert that the answerid matches
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.submissionid").value(answer.getAnswerid()));
 
         List<Submission> submissions = submissionRepo.findAll();
         assertEquals(1, submissions.size());
@@ -76,13 +78,48 @@ public class QuizRestControllerSubmissionTest {
 
     @Test
     public void createAnswerDoesNotSaveAnswerWithoutAnswerOption() throws Exception {
-        // KESKEN
         this.mockMvc.perform(post("/api/submissions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{ \"answerOptionId\": null }"))
                 .andExpect(status().isBadRequest());
 
         assertEquals(0, submissionRepo.count());
+    }
+
+    @Test
+    public void createAnswerDoesNotSaveAnswerForNonExistingAnswerOption() throws Exception {
+        this.mockMvc.perform(post("/api/submissions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{ \"answerOptionId\": 1 }"))
+                .andExpect(status().isNotFound());
+
+        assertEquals(0, submissionRepo.count());
+    }
+
+    @Test
+    public void createAnswerDoesNotSaveAnswerForNonPublishedQuiz() throws Exception {
+        Quiz quiz = new Quiz(null, "Non-Published Quiz", "A quiz", false, null, null);
+        quizRepo.save(quiz);
+
+        Question question = new Question("Question 1", "Easy");
+        question.setQuiz(quiz);
+        questionRepo.save(question);
+
+        Answer answer = new Answer("Answer Option 1", true);
+        answer.setQuestion(question);
+        answerRepo.save(answer);
+
+        SubmissionDto submissiondto = new SubmissionDto();
+        submissiondto.setAnswerOptionId(answer.getAnswerid());
+        String requestBody = mapper.writeValueAsString(submissiondto);
+
+        this.mockMvc.perform(post("/api/submissions")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isForbidden());
+
+        List<Submission> submissions = submissionRepo.findAll();
+        assertEquals(0, submissions.size());
     }
 
 }
