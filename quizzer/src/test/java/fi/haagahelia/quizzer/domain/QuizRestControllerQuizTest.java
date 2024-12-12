@@ -64,7 +64,7 @@ public class QuizRestControllerQuizTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name").value("Published Quiz"))
-                .andExpect(jsonPath("$[].name").value("Published Quiz 2"));
+                .andExpect(jsonPath("$[1].name").value("Published Quiz 2"));
     }
 
 }
