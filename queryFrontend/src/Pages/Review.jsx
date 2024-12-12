@@ -48,10 +48,7 @@ function Review() {
 
     return (
         <div style={{ padding: '20px' }}>
-            <Typography variant="h4" gutterBottom>
-                Reviews of the quiz: "{quiz ? quiz.name : 'Loading...'}"
-            </Typography>
-
+            <h2>Reviews of the quiz: "{quiz ? quiz.name : 'Loading...'}"</h2>
             <Typography variant="h6" style={{ marginTop: '20px' }}>
                 {reviews.length > 0 && (
                     <Typography variant="body2" style={{ marginTop: '20px' }}>

@@ -75,7 +75,7 @@ function Quiz() {
 
   return (
     <div>
-      <h1>{quiz.name}</h1>
+      <h2>{quiz.name}</h2>
       <p>{quiz.description}</p>
       <p></p>
       <p>Added on: {quiz.date} - Category: {quiz.category.name}- Total Questions: {totalQuestions}</p>
@@ -83,7 +83,7 @@ function Quiz() {
         {quiz.questions.map((question, index) => (
           <div key={question.questionid} className="question">
             <Item>
-              <h2>{question.name}</h2>
+              <h3>{question.name}</h3>
               <p>Question {index + 1} of {totalQuestions} - Difficulty: {question.difficulty}</p>
               <ul>
                 {question.answers.map((answer) => (
