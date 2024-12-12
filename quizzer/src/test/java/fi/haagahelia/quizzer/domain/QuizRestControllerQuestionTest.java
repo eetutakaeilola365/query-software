@@ -31,6 +31,7 @@ public class QuizRestControllerQuestionTest {
     @BeforeEach
     void setUp() throws Exception {
         quizRepo.deleteAll();
+        questionRepo.deleteAll();
     }
 
     @Test
