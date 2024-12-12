@@ -80,7 +80,7 @@ public class QuizRestControllerTests {
     }
 
     @Test
-    public void getCategoryById_invalidCategory_returnsNotFound() throws Exception {
+    public void getCategoryByIdinvalidCategoryreturnsNotFound() throws Exception {
         Long categoryId = 999L;
 
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
