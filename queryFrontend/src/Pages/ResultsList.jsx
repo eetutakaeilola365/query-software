@@ -50,14 +50,13 @@ function ResultsList() {
       const quizIdNumber = parseInt(quizId, 10);
       const data = await getQuizSubmissionsById(quizIdNumber);
 
-      // Set results and questions from API response
       setResults({
         quizName: data.quizName,
         questionCount: data.questionCount,
         totalAnswers: data.submissionsCount,
       });
 
-      setQuestions(data.questions); // Assign questions array directly
+      setQuestions(data.questions);
     } catch (error) {
       console.error("Error fetching results:", error);
     }
@@ -70,7 +69,7 @@ function ResultsList() {
   return (
     <>
       <Typography variant="h4">
-        Results of "{results.quizName || "Loading..."}"
+        Results for the quiz: "{results.quizName || "Loading..."}"
       </Typography>
       <div>
         {results.totalAnswers || 0} answers to {results.questionCount || 0}{" "}

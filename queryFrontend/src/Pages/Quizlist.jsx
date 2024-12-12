@@ -9,16 +9,16 @@ import { getQuizzes } from '../../quizApi';
 function QuizList() {
   const navigate = useNavigate();
   const handleQuizClick = (quizId) => {
-    navigate(`/quiz/${quizId}`); // Navigate to the quiz details page
+    navigate(`/quiz/${quizId}`);
   };
 
 
   const handleSeeReviewsClick = (quizId) => {
-    navigate(`/quiz/${quizId}/reviews`); // Navigate to the reviews page for the quiz
+    navigate(`/quiz/${quizId}/reviews`); 
   };
   
   const handleResultsClick = (quizId) => {
-    navigate(`/quiz/${quizId}/results`); // Navigate to the results page
+    navigate(`/quiz/${quizId}/results`); 
   };
   const [quizzes, setQuizzes] = useState([]);
   const [colDefs, setColDefs] = useState([
@@ -31,12 +31,11 @@ function QuizList() {
         >
           {params.value}
         </span>
-      ), // able to go to quiz
+      ),flex: 1
     },
-    { field: "description", cellStyle: { whiteSpace: 'nowrap' }, 
-    flex: 1}, // venyttää fieldiä tarpeeks et koko description mahtuu siihen
+    { field: "description", cellStyle: { whiteSpace: 'nowrap' }, flex: 1}, 
     { field: "category.name", flex:1 },
-    { field: "date" },
+    { field: "date", flex: 1 },
     {
       headerName: "See Reviews",
       cellRenderer: params => (
@@ -46,7 +45,7 @@ function QuizList() {
         >
           See Reviews
         </span>
-      ),},
+      ), flex: 1},
     {
       headerName: "Results",
       cellRenderer: params => (
@@ -56,12 +55,12 @@ function QuizList() {
             textDecoration: "underline",
             cursor: "pointer",
           }}
-          onClick={() => handleResultsClick(params.data.quizid)} // Lisää navigointi tulossivulle
+          onClick={() => handleResultsClick(params.data.quizid)} 
         >
           See Results
         </span>
       ),
-      width: 120,
+      width: 120, flex: 1
     },
   ])
 
