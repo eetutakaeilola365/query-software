@@ -13,8 +13,8 @@ School project. In this project the end goal is to make a software where the use
    https://github.com/users/eetutakaeilola365/projects/1/views/3
    
    __Deployment link:__
-   [FrontEnd Deployment](https://quizzer-frontend-pepperpot.onrender.com/)
-   [BackEnd Deployment](https://quizzer-pepperpot.onrender.com/quizlist)
+   -[FrontEnd Deployment](https://quizzer-frontend-pepperpot.onrender.com/)
+   -[BackEnd Deployment](https://quizzer-pepperpot.onrender.com/quizlist)
    
    __License link:__
    https://github.com/eetutakaeilola365/query-software?tab=MIT-1-ov-file
