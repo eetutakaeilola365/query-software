@@ -50,7 +50,7 @@ The project is structured into three main components:
 
 #### 2. __Starting the Back End application__
    - Clone the repository `git clone <repository-url>`
-   - Navigate to the folder of the repository and open command line
+   - Navigate to the folder of the repository and open command-line
    - In the folder run the command `mvnw spring-boot:run`
 
 ### How to start the Front end application:
@@ -60,10 +60,16 @@ The project is structured into three main components:
    - `npm` 
 #### 2. __Starting the Front End application:__
    - Navigate to the folder of the front end `queryFrontend`
-   - Open command line in that folder
+   - Open command-line in that folder
    - Install the front end dependencies by running `npm install`
    - Start the front end application using `npm run dev`
 
+### How to start the tests:
+#### 1. __System requirements:__
+   - `maven`
+#### 2. __Starting the tests:__
+   - Open command-line runner in the project folder
+   - run the command `./mvnw test`
 
 ## Data model
 
