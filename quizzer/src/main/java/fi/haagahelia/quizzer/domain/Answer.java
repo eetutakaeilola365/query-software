@@ -49,7 +49,7 @@ public class Answer {
         this.correct = correct;
     }
 
-    public boolean isCorrect() {
+    public Boolean isCorrect() {
         return correct;
     }
 
